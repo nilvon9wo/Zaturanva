@@ -48,7 +48,7 @@ internal static class TeamFactory
 		Team firstTeam = TeamUtility.GetRandom();
 		return new()
 		{
-			[firstTeam] = new() { duplicatedPlayer! },
+			[firstTeam] = new() { duplicatedPlayer },
 			[TeamUtility.GetOther(firstTeam)] = allPlayers.Shuffle()
 				.ToList()
 				.Where(player => player != duplicatedPlayer)
