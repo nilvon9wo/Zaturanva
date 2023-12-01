@@ -5,6 +5,8 @@ VisualStudioVersion = 17.9.34310.174
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Zaturanva.Engine", "Zaturanva.Engine\Zaturanva.Engine.csproj", "{FAF2AAD9-F64E-4B69-8A9B-E1C4F600F888}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Zaturanva.Common", "Zaturanva.Common\Zaturanva.Common.csproj", "{B8649F21-3C3D-4402-9CB5-D29DB959DCAE}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +17,10 @@ Global
 		{FAF2AAD9-F64E-4B69-8A9B-E1C4F600F888}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{FAF2AAD9-F64E-4B69-8A9B-E1C4F600F888}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{FAF2AAD9-F64E-4B69-8A9B-E1C4F600F888}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B8649F21-3C3D-4402-9CB5-D29DB959DCAE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B8649F21-3C3D-4402-9CB5-D29DB959DCAE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B8649F21-3C3D-4402-9CB5-D29DB959DCAE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B8649F21-3C3D-4402-9CB5-D29DB959DCAE}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
