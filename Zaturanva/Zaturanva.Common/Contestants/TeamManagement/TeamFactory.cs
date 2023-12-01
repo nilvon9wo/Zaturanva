@@ -14,7 +14,7 @@ internal static class TeamFactory
 		return distinctPlayers.Count switch
 		{
 			2 => CreateTeamsFor2DistinctPlayers(distinctPlayers),
-			3 => CreateTeamsFor3DistinctPlayers(distinctPlayers),
+			3 => CreateTeamsFor3DistinctPlayers(players),
 			4 => CreateTeamsFor4DistinctPlayers(distinctPlayers),
 			_ => throw new PlayersException(
 				"Unexpected number of distinct players."
