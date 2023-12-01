@@ -17,9 +17,3 @@ using System.Diagnostics.CodeAnalysis;
 		"IDE0300:Simplify collection initialization",
 		Justification = "<Pending>"
 	)]
-[assembly:
-	SuppressMessage(
-		"Style",
-		"IDE0305:Simplify collection initialization",
-		Justification = "<Pending>"
-	)]

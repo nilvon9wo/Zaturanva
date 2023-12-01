@@ -4,11 +4,11 @@ using Zaturanva.Common.Colors;
 
 namespace Zaturanva.Common.Contestants;
 
-public class Players : IEnumerable<Player>
+public class Players : IEnumerable<IPlayer>
 {
-	private readonly Dictionary<Color, Player> _playersByColor = new();
+	private readonly Dictionary<Color, IPlayer> _playersByColor = new();
 
-	public void Add(Player player)
+	public void Add(IPlayer player)
 	{
 		ArgumentNullException.ThrowIfNull(player);
 		HashSet<Color> colors = player.Colors;
@@ -26,12 +26,23 @@ public class Players : IEnumerable<Player>
 		}
 	}
 
-	public IEnumerator<Player> GetEnumerator()
-		=> _playersByColor.Values.GetEnumerator();
+	public void AddRange(IEnumerable<IPlayer> players)
+	{
+		ArgumentNullException.ThrowIfNull(players);
+
+		foreach (IPlayer player in players)
+		{
+			Add(player);
+		}
+	}
+
+	public IEnumerator<IPlayer> GetEnumerator()
+		=> _playersByColor.Keys.Select(color => _playersByColor[color])
+			.GetEnumerator();
 
 	IEnumerator IEnumerable.GetEnumerator()
 		=> GetEnumerator();
 
-	public Player this[Color color]
+	public IPlayer this[Color color]
 		=> _playersByColor[color];
 }

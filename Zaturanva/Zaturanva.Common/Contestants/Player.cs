@@ -7,9 +7,12 @@ public class Player : IPlayer
 {
 	public HashSet<Color> Colors { get; } = new();
 
-	public Player Assign(Color color)
+	public IPlayer Assign(Color color)
 	{
 		_ = Colors.Add(color);
 		return this;
 	}
+
+	public bool IsPlaying(Color color)
+		=> Colors.Contains(color);
 }

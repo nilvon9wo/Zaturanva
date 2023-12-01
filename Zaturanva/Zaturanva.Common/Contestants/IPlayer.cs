@@ -4,5 +4,7 @@ namespace Zaturanva.Common.Contestants;
 
 public interface IPlayer
 {
-	Player Assign(Color color);
+	public HashSet<Color> Colors { get; }
+	IPlayer Assign(Color color);
+	bool IsPlaying(Color color);
 }
