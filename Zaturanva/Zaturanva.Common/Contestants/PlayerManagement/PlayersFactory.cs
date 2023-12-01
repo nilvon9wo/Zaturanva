@@ -17,10 +17,6 @@ public static class PlayersFactory
 			() =>
 			{
 				IPlayer[] playerArray = players.ToArray();
-				if (playerArray.Length != 4)
-				{
-					throw new ArgumentException("Four players are required.");
-				}
 
 				Dictionary<Team, List<IPlayer>> teams
 					= TeamFactory.ToTeams(playerArray);
