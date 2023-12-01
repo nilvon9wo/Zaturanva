@@ -1,8 +1,7 @@
 ﻿using System.Collections;
-
 using Zaturanva.Common.Colors;
 
-namespace Zaturanva.Common.Contestants;
+namespace Zaturanva.Common.Contestants.PlayerManagement;
 
 public class Players : IEnumerable<IPlayer>
 {

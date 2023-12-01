@@ -1,4 +1,4 @@
-﻿namespace Zaturanva.Common.Contestants;
+﻿namespace Zaturanva.Common.Contestants.PlayerManagement;
 
 public class PlayersException : Exception
 {

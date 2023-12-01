@@ -1,24 +1,24 @@
 ﻿using System.Security.Cryptography;
 
-namespace Zaturanva.Common.Contestants;
+namespace Zaturanva.Common.Extensions;
 
-internal static class PlayerShuffler
+internal static class EnumerableExtensions
 {
-	internal static List<T> Shuffle<T>(this IEnumerable<T> inputPlayers)
+	internal static IEnumerable<T> Shuffle<T>(this IEnumerable<T> input)
 	{
-		List<T> resultPlayers = inputPlayers.ToList();
+		List<T> result = input.ToList();
 		using RandomNumberGenerator randomGenerator
 			= RandomNumberGenerator.Create();
-		int playerCount = resultPlayers.Count;
-		while (playerCount > 1)
+		int resultCount = result.Count;
+		while (resultCount > 1)
 		{
-			playerCount--;
-			int swapIndex = GetRandomNumber(playerCount, randomGenerator);
-			(resultPlayers[playerCount], resultPlayers[swapIndex])
-				= (resultPlayers[swapIndex], resultPlayers[playerCount]);
+			resultCount--;
+			int swapIndex = GetRandomNumber(resultCount, randomGenerator);
+			(result[resultCount], result[swapIndex])
+				= (result[swapIndex], result[resultCount]);
 		}
 
-		return resultPlayers;
+		return result;
 	}
 
 	private static int GetRandomNumber(

@@ -2,7 +2,7 @@
 
 using Zaturanva.Common.Armies;
 using Zaturanva.Common.Colors;
-using Zaturanva.Common.Contestants;
+using Zaturanva.Common.Contestants.PlayerManagement;
 using Zaturanva.Common.Pieces;
 
 // ReSharper disable MemberCanBePrivate.Global

@@ -1,9 +1,5 @@
-﻿using LanguageExt;
-
-using Zaturanva.Common.Colors;
-using Zaturanva.Common.Contestants;
-
-using Generic = System.Collections.Generic;
+﻿using Zaturanva.Common.Colors;
+using Zaturanva.Common.Contestants.PlayerManagement;
 
 namespace Zaturanva.Common.Tests.TestUtilities;
 
@@ -14,7 +10,7 @@ public static class PlayersExtensions
 		ArgumentNullException.ThrowIfNull(players);
 
 		return players.Aggregate(
-				new Generic.HashSet<Color>(),
+				new HashSet<Color>(),
 				(uniqueColors, player) =>
 				{
 					uniqueColors.UnionWith(player.Colors);
@@ -26,7 +22,7 @@ public static class PlayersExtensions
 
 	public static bool HasPlayerWithColors(
 		this Players players,
-		Generic.HashSet<Color> targetColors
+		HashSet<Color> targetColors
 	)
 		=> (
 				from IPlayer player in players

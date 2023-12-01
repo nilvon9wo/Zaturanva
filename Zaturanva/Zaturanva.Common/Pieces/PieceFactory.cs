@@ -1,8 +1,7 @@
 ﻿using LanguageExt;
 
 using Zaturanva.Common.ChessBoard;
-using Zaturanva.Common.Contestants;
-
+using Zaturanva.Common.Contestants.PlayerManagement;
 using static LanguageExt.Prelude;
 
 namespace Zaturanva.Common.Pieces;

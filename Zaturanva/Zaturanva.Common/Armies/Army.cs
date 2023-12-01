@@ -1,5 +1,5 @@
 ﻿using Zaturanva.Common.Colors;
-using Zaturanva.Common.Contestants;
+using Zaturanva.Common.Contestants.PlayerManagement;
 using Zaturanva.Common.Pieces;
 
 namespace Zaturanva.Common.Armies;

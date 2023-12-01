@@ -1,6 +1,6 @@
 ﻿using Zaturanva.Common.Colors;
 
-namespace Zaturanva.Common.Contestants;
+namespace Zaturanva.Common.Contestants.PlayerManagement;
 
 public interface IPlayer
 {

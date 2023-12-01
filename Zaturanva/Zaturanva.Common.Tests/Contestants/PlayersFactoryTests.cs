@@ -1,7 +1,6 @@
 ﻿using LanguageExt;
-
 using Zaturanva.Common.Colors;
-using Zaturanva.Common.Contestants;
+using Zaturanva.Common.Contestants.PlayerManagement;
 using Zaturanva.Common.Tests.TestUtilities;
 
 namespace Zaturanva.Common.Tests.Contestants;
