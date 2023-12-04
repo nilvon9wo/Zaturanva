@@ -1,13 +1,13 @@
 ﻿using Zaturanva.Common.Armies;
 using Zaturanva.Common.Contestants.PlayerManagement;
 
-namespace Zaturanva.Engine.Games;
+namespace Zaturanva.Common.Games;
 
 public class Game
 {
 	public required Players Players { get; init; }
 
-	public Alliance Achromatics
+	public Alliance Achromatic
 		=> new() { BlackArmy, WhiteArmy };
 
 	public Alliance Vivids

@@ -3,11 +3,10 @@
 using Zaturanva.Common.Armies;
 using Zaturanva.Common.Colors;
 using Zaturanva.Common.Contestants.PlayerManagement;
+using Zaturanva.Common.Games;
 using Zaturanva.Common.Pieces;
-using Zaturanva.Engine.Games;
-using Zaturanva.Engine.Tests.TestUtilities;
 
-namespace Zaturanva.Engine.Tests.Games;
+namespace Zaturanva.Common.Tests;
 
 public class GameFactoryTests
 {
@@ -24,7 +23,8 @@ public class GameFactoryTests
 		};
 
 		// Act
-		Try<Game> result = GameFactory.CreateFor(players);
+		Try<Game> result
+			= GameFactory.CreateFor(players);
 
 		// Assert
 		_ = result.Match(
@@ -37,22 +37,26 @@ public class GameFactoryTests
 
 				AssertCorrectArmy(
 					game.BlackArmy,
-					GameConfiguration.BlackArmyPlacements
+					TestUtilities.GameConfiguration
+						.BlackArmyPlacements
 				);
 				AssertCorrectArmy(
 					game.WhiteArmy,
-					GameConfiguration.WhiteArmyPlacements
+					TestUtilities.GameConfiguration
+						.WhiteArmyPlacements
 				);
 				AssertCorrectArmy(
 					game.BlueArmy,
-					GameConfiguration.BlueArmyPlacements
+					TestUtilities.GameConfiguration
+						.BlueArmyPlacements
 				);
 				AssertCorrectArmy(
 					game.OrangeArmy,
-					GameConfiguration.OrangeArmyPlacements
+					TestUtilities.GameConfiguration
+						.OrangeArmyPlacements
 				);
 			},
-			ex => Assert.True(false, $"Unexpected exception: {ex}")
+			ex => Assert.Fail($"Unexpected exception: {ex}")
 		);
 	}
 
@@ -74,10 +78,11 @@ public class GameFactoryTests
 						actualPiece
 					);
 					Assert.IsType(
-						GameConfiguration.GetExpectedPieceType(
-							army,
-							expectedPlacement
-						),
+						TestUtilities.GameConfiguration
+							.GetExpectedPieceType(
+								army,
+								expectedPlacement
+							),
 						actualPiece
 					);
 				},
@@ -93,11 +98,11 @@ public class GameFactoryTests
 		IPiece actualPiece
 	)
 		=> actualPiece.Location.Match(
-			Some: actualLocation => Assert.Equal(
+			actualLocation => Assert.Equal(
 				expectedPlacement,
 				actualLocation
 			),
-			None: () => throw new InvalidDataException(
+			() => throw new InvalidDataException(
 				"Piece not at expected location."
 			)
 		);

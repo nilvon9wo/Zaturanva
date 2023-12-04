@@ -1,12 +1,12 @@
-﻿using LanguageExt;
+﻿// ReSharper disable MemberCanBePrivate.Global
+
+using LanguageExt;
 
 using Zaturanva.Common.Armies;
 using Zaturanva.Common.Colors;
 using Zaturanva.Common.Contestants.PlayerManagement;
 
-// ReSharper disable MemberCanBePrivate.Global
-
-namespace Zaturanva.Engine.Games;
+namespace Zaturanva.Common.Games;
 
 public static class GameFactory
 {

@@ -1,12 +1,14 @@
 ﻿using LanguageExt;
 
 using Zaturanva.Common.ChessBoard;
+using Zaturanva.Common.Colors;
 using Zaturanva.Common.Contestants.PlayerManagement;
 
 namespace Zaturanva.Common.Pieces;
 
 public interface IPiece
 {
+	public Color Color { get; }
 	public Option<Coordinates> Location { get; set; }
 	public bool CanMoveTo(Board board, Coordinates destination);
 

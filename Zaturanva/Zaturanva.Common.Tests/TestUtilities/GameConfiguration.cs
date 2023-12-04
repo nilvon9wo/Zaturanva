@@ -2,7 +2,7 @@
 using Zaturanva.Common.Colors;
 using Zaturanva.Common.Pieces;
 
-namespace Zaturanva.Engine.Tests.TestUtilities;
+namespace Zaturanva.Common.Tests.TestUtilities;
 
 internal static class GameConfiguration
 {

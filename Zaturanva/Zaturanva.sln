@@ -7,9 +7,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Zaturanva.Engine", "Zaturan
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Zaturanva.Common", "Zaturanva.Common\Zaturanva.Common.csproj", "{B8649F21-3C3D-4402-9CB5-D29DB959DCAE}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Zaturanva.Common.Tests", "Zaturanva.Common.Tests\Zaturanva.Common.Tests.csproj", "{7BA69B0D-D948-417D-828E-2E54899EEDF1}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Zaturanva.Engine.Tests", "Zaturanva.Engine.Tests\Zaturanva.Engine.Tests.csproj", "{242E147C-5FE8-4E8A-BEE0-E8D7B7DF82C2}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Zaturanva.Common.Tests", "Zaturanva.Common.Tests\Zaturanva.Common.Tests.csproj", "{7BA69B0D-D948-417D-828E-2E54899EEDF1}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -29,10 +27,6 @@ Global
 		{7BA69B0D-D948-417D-828E-2E54899EEDF1}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7BA69B0D-D948-417D-828E-2E54899EEDF1}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{7BA69B0D-D948-417D-828E-2E54899EEDF1}.Release|Any CPU.Build.0 = Release|Any CPU
-		{242E147C-5FE8-4E8A-BEE0-E8D7B7DF82C2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{242E147C-5FE8-4E8A-BEE0-E8D7B7DF82C2}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{242E147C-5FE8-4E8A-BEE0-E8D7B7DF82C2}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{242E147C-5FE8-4E8A-BEE0-E8D7B7DF82C2}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

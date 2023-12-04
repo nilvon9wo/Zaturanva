@@ -1,12 +1,15 @@
 ﻿using LanguageExt;
 
 using Zaturanva.Common.ChessBoard;
+using Zaturanva.Common.Colors;
 using Zaturanva.Common.Contestants.PlayerManagement;
 
 namespace Zaturanva.Common.Pieces;
 
 public class Horse : IPiece
 {
+	public Color Color { get; init; }
+
 	public required IPlayer Owner { get; set; }
 
 	public Option<IPlayer> CapturedBy { get; set; } = Option<IPlayer>.None;
