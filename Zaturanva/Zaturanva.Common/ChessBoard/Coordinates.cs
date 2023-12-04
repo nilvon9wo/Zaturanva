@@ -46,6 +46,20 @@ public readonly struct Coordinates(int x, int y) : IEquatable<Coordinates>
 		return new(x, y - 1);
 	}
 
+	public static Coordinates operator -(Coordinates left, Coordinates right)
+		=> Subtract(left, right);
+
+	// ReSharper disable once MemberCanBePrivate.Global
+	public static Coordinates Subtract(Coordinates left, Coordinates right)
+		=> new(left.X - right.X, left.Y - right.Y);
+
+	public static Coordinates operator +(Coordinates left, Coordinates right)
+		=> Add(left, right);
+
+	// ReSharper disable once MemberCanBePrivate.Global
+	public static Coordinates Add(Coordinates left, Coordinates right)
+		=> new(left.X + right.X, left.Y + right.Y);
+
 	public static implicit operator string(Coordinates coordinates)
 		=> coordinates.ToString();
 
@@ -54,4 +68,22 @@ public readonly struct Coordinates(int x, int y) : IEquatable<Coordinates>
 
 	public Coordinates ToCoordinates()
 		=> new(X, Y);
+
+	public Coordinates Rotate(int angle)
+	{
+		int x = X;
+		int y = Y;
+
+		int normalizedAngle = ((angle % 360) + 360) % 360;
+		return normalizedAngle switch
+		{
+			0 => new(x, y),
+			90 => new(y, 7 - x),
+			180 => new(7 - x, 7 - y),
+			270 => new(7 - y, x),
+			_ => throw new ArgumentException(
+				$"Invalid angle: {angle}. Only 0, 90, 180, and 270 are supported."
+			),
+		};
+	}
 }

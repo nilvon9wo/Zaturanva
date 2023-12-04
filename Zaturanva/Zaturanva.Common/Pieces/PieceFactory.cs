@@ -15,11 +15,16 @@ internal static class PieceFactory
 		IPlayer owner,
 		KeyValuePair<Coordinates, Type> coordinatesTypePair
 	)
+		=> Create(owner, coordinatesTypePair.Value, coordinatesTypePair.Key);
+
+	internal static Try<IPiece> Create(
+		IPlayer owner,
+		Type pieceType,
+		Coordinates coordinates
+	)
 		=> Try(
 			() =>
 			{
-				Type pieceType = Guard.Against.Null(coordinatesTypePair)
-					.Value;
 				object pieceInstance = Activator.CreateInstance(pieceType)
 									   ?? throw new InvalidPieceException(
 										   $"Can't create {pieceType}."
@@ -27,8 +32,7 @@ internal static class PieceFactory
 				switch (pieceInstance)
 				{
 					case IPiece piece:
-						piece.Location
-							= Option<Coordinates>.Some(coordinatesTypePair.Key);
+						piece.Location = Option<Coordinates>.Some(coordinates);
 						piece.Owner = Guard.Against.Null(owner);
 						return piece;
 					default:
