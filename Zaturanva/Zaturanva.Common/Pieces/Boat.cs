@@ -3,6 +3,7 @@
 using Zaturanva.Common.ChessBoard;
 using Zaturanva.Common.Colors;
 using Zaturanva.Common.Contestants.PlayerManagement;
+using Zaturanva.Common.Games;
 
 namespace Zaturanva.Common.Pieces;
 
@@ -16,12 +17,12 @@ public class Boat : IPiece
 
 	public required Option<Coordinates> Location { get; set; }
 
-	public bool CanBeMovedBy(Board board, IPlayer player)
+	public bool CanBeMovedBy(Game game, IPlayer player)
 		=> throw new NotImplementedException();
 
-	public bool CanMoveTo(Board board, Coordinates destination)
+	public bool CanMoveTo(Game game, Coordinates destination)
 		=> throw new NotImplementedException();
 
-	public Try<IPiece> MoveTo(Board board, Coordinates destination)
+	public Try<IPiece> MoveTo(Game game, Coordinates destination)
 		=> throw new NotImplementedException();
 }

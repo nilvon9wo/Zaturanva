@@ -3,6 +3,7 @@
 using LanguageExt;
 
 using Zaturanva.Common.Armies;
+using Zaturanva.Common.ChessBoard;
 using Zaturanva.Common.Colors;
 using Zaturanva.Common.Contestants.PlayerManagement;
 
@@ -16,12 +17,23 @@ public static class GameFactory
 			.Map(CreateFor);
 
 	private static Game CreateFor(Players players)
-		=> new()
+	{
+		Army blackArmy = ArmyFactory.CreateFor(players, Color.Black);
+		Army whiteArmy = ArmyFactory.CreateFor(players, Color.White);
+		Army blueArmy = ArmyFactory.CreateFor(players, Color.Blue);
+		Army orangeArmy = ArmyFactory.CreateFor(players, Color.Orange);
+		IEnumerable<Pieces.IPiece> allPieces = blackArmy.Pieces
+			.Concat(whiteArmy.Pieces)
+			.Concat(blueArmy.Pieces)
+			.Concat(orangeArmy.Pieces);
+		return new()
 		{
 			Players = players,
-			BlackArmy = ArmyFactory.CreateFor(players, Color.Black),
-			WhiteArmy = ArmyFactory.CreateFor(players, Color.White),
-			BlueArmy = ArmyFactory.CreateFor(players, Color.Blue),
-			OrangeArmy = ArmyFactory.CreateFor(players, Color.Orange),
+			BlackArmy = blackArmy,
+			WhiteArmy = whiteArmy,
+			BlueArmy = blueArmy,
+			OrangeArmy = orangeArmy,
+			Board = Board.From(allPieces),
 		};
+	}
 }

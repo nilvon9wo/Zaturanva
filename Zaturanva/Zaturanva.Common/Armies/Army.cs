@@ -22,8 +22,8 @@ public class Army
 		IPiece? piece = Pieces
 			.FirstOrDefault(
 				piece => piece.Location.Match(
-					Some: location => location == targetLocation,
-					None: () => false
+					location => location == targetLocation,
+					() => false
 				)
 			);
 		return piece == null
