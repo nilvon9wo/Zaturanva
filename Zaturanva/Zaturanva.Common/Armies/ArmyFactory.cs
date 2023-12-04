@@ -29,39 +29,40 @@ public static class ArmyFactory
 	public static Army CreateFor(Players players, Color color)
 		=> Create(
 				Guard.Against.Null(players)[color],
-				color,
-				color.GetRotation(),
-				_initialPieceTypeByCoordinates
+				color
 			)
 			.Match(
 				army => army,
 				ex => throw ex
 			);
 
-	private static Try<Army> Create(
-		IPlayer owner,
-		Color color,
-		int rotationAngle,
-		Dictionary<Coordinates, Type> initialPieceTypeByCoordinates
-	)
-		=> Try<Army>(
-			() => new()
+	private static Try<Army> Create(IPlayer owner, Color color)
+		=> Try(
+			(Func<Army>)(() => new()
 			{
 				Owner = Guard.Against.Null(owner),
 				Color = color,
-				Pieces = Guard.Against.Null(initialPieceTypeByCoordinates)
-					.Select(
-						kv => PieceFactory.Create(
-								owner,
-								kv.Value,
-								kv.Key.Rotate(rotationAngle)
-							)
-							.Match(
-								piece => piece,
-								exception => throw exception
-							)
-					)
+				Pieces = Guard.Against.Null(_initialPieceTypeByCoordinates)
+					.Select(kvp => CreateFor(owner, color, kvp))
 					.ToHashSet(),
-			}
+			})
 		);
+
+	private static IPiece CreateFor(
+		IPlayer owner,
+		Color color,
+		KeyValuePair<Coordinates, Type> coordinateTypePair
+	)
+	{
+		int rotationAngle = color.GetRotation();
+		return PieceFactory.Create(
+				owner,
+				coordinateTypePair.Value,
+				coordinateTypePair.Key.Rotate(rotationAngle)
+			)
+			.Match(
+				piece => piece,
+				exception => throw exception
+			);
+	}
 }
