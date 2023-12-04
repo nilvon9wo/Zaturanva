@@ -5,10 +5,10 @@ namespace Zaturanva.Engine.Games;
 public class Game
 {
 	public Alliance ShadeTeam
-		=> new() { BlackArmy!, WhiteArmy! };
+		=> new() { BlackArmy, WhiteArmy };
 
 	public Alliance ColorTeam
-		=> new() { BlueArmy!, OrangeArmy! };
+		=> new() { BlueArmy, OrangeArmy };
 
 	public required Army BlackArmy { get; init; }
 	public required Army WhiteArmy { get; init; }
