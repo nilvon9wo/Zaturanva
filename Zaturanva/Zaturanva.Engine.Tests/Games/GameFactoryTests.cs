@@ -5,6 +5,7 @@ using Zaturanva.Common.Colors;
 using Zaturanva.Common.Contestants.PlayerManagement;
 using Zaturanva.Common.Pieces;
 using Zaturanva.Engine.Games;
+using Zaturanva.Engine.Tests.TestUtilities;
 
 namespace Zaturanva.Engine.Tests.Games;
 
@@ -36,47 +37,19 @@ public class GameFactoryTests
 
 				AssertCorrectArmy(
 					game.BlackArmy,
-					"h8",
-					"g8",
-					"f8",
-					"e8",
-					"h7",
-					"g7",
-					"f7",
-					"e7"
+					GameConfiguration.BlackArmyPlacements
 				);
 				AssertCorrectArmy(
 					game.WhiteArmy,
-					"a1",
-					"b1",
-					"c1",
-					"d1",
-					"a2",
-					"b2",
-					"c2",
-					"d2"
+					GameConfiguration.WhiteArmyPlacements
 				);
 				AssertCorrectArmy(
 					game.BlueArmy,
-					"a8",
-					"a7",
-					"a6",
-					"a5",
-					"b8",
-					"b7",
-					"b6",
-					"b5"
+					GameConfiguration.BlueArmyPlacements
 				);
 				AssertCorrectArmy(
 					game.OrangeArmy,
-					"h1",
-					"h2",
-					"h3",
-					"h4",
-					"g1",
-					"g2",
-					"g3",
-					"g4"
+					GameConfiguration.OrangeArmyPlacements
 				);
 			},
 			ex => Assert.True(false, $"Unexpected exception: {ex}")
@@ -85,16 +58,13 @@ public class GameFactoryTests
 
 	private static void AssertCorrectArmy(
 		Army army,
-		params string[] expectedPiecePlacements
+		List<string> expectedPiecePlacements
 	)
 	{
 		Assert.NotNull(army);
+
 		foreach (string expectedPlacement in expectedPiecePlacements)
 		{
-			Type expectedPieceType
-				= GetExpectedPieceType(
-					expectedPlacement
-				); // Adjust the expected piece type based on your configuration
 			Option<IPiece> piece = army.GetPieceAt(expectedPlacement);
 			_ = piece.Match(
 				actualPiece =>
@@ -103,68 +73,20 @@ public class GameFactoryTests
 						expectedPlacement.ToUpperInvariant(),
 						actualPiece
 					);
-					Assert.IsType(expectedPieceType, actualPiece);
+					Assert.IsType(
+						GameConfiguration.GetExpectedPieceType(
+							army,
+							expectedPlacement
+						),
+						actualPiece
+					);
 				},
 				() => throw new InvalidDataException(
-					"No piece not at expected location."
+					"No piece at the expected location."
 				)
 			);
 		}
 	}
-
-	private static Type GetExpectedPieceType(string placement)
-	{
-		int placementIndex = Array.IndexOf(_expectedPiecePlacements, placement);
-		return _pieceTypes[placementIndex % _pieceTypes.Count];
-	}
-
-	private static readonly List<Type> _pieceTypes = new()
-	{
-		typeof(Boat),
-		typeof(Horse),
-		typeof(Elephant),
-		typeof(King),
-		typeof(Pawn),
-		typeof(Pawn),
-		typeof(Pawn),
-		typeof(Pawn),
-	};
-
-	private static readonly string[] _expectedPiecePlacements = new string[]
-	{
-		"h8",
-		"g8",
-		"f8",
-		"e8",
-		"h7",
-		"g7",
-		"f7",
-		"e7",
-		"a1",
-		"b1",
-		"c1",
-		"d1",
-		"a2",
-		"b2",
-		"c2",
-		"d2",
-		"a8",
-		"a7",
-		"a6",
-		"a5",
-		"b8",
-		"b7",
-		"b6",
-		"b5",
-		"h1",
-		"h2",
-		"h3",
-		"h4",
-		"g1",
-		"g2",
-		"g3",
-		"g4",
-	};
 
 	private static void AssertLocation(
 		string expectedPlacement,

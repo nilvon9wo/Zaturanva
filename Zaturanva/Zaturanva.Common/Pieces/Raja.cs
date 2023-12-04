@@ -1,11 +1,10 @@
 ﻿using LanguageExt;
-
 using Zaturanva.Common.ChessBoard;
 using Zaturanva.Common.Contestants.PlayerManagement;
 
 namespace Zaturanva.Common.Pieces;
 
-public class King : IPiece
+public class Raja : IPiece
 {
 	public required IPlayer Owner { get; set; }
 

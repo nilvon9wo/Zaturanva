@@ -23,3 +23,9 @@ using System.Diagnostics.CodeAnalysis;
 		"CA1707:Identifiers should not contain underscores",
 		Justification = "<Pending>"
 	)]
+[assembly:
+	SuppressMessage(
+		"Style",
+		"IDE0305:Simplify collection initialization",
+		Justification = "<Pending>"
+	)]
