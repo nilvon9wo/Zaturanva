@@ -18,6 +18,7 @@ public static class GameFactory
 	private static Game CreateFor(Players players)
 		=> new()
 		{
+			Players = players,
 			BlackArmy = ArmyFactory.CreateFor(players, Color.Black),
 			WhiteArmy = ArmyFactory.CreateFor(players, Color.White),
 			BlueArmy = ArmyFactory.CreateFor(players, Color.Blue),
