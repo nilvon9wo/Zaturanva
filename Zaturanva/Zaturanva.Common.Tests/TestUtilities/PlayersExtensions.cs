@@ -1,4 +1,6 @@
-﻿using Zaturanva.Common.Colors;
+﻿using Ardalis.GuardClauses;
+
+using Zaturanva.Common.Colors;
 using Zaturanva.Common.Contestants.PlayerManagement;
 
 namespace Zaturanva.Common.Tests.TestUtilities;
@@ -6,10 +8,8 @@ namespace Zaturanva.Common.Tests.TestUtilities;
 public static class PlayersExtensions
 {
 	public static int CountUniqueColors(this Players players)
-	{
-		ArgumentNullException.ThrowIfNull(players);
-
-		return players.Aggregate(
+		=> Guard.Against.Null(players)
+			.Aggregate(
 				new HashSet<Color>(),
 				(uniqueColors, player) =>
 				{
@@ -18,7 +18,6 @@ public static class PlayersExtensions
 				}
 			)
 			.Count;
-	}
 
 	public static bool HasPlayerWithColors(
 		this Players players,

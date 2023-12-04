@@ -1,8 +1,12 @@
-﻿using LanguageExt;
+﻿using Ardalis.GuardClauses;
+
+using LanguageExt;
+
 using Zaturanva.Common.ChessBoard;
 using Zaturanva.Common.Colors;
 using Zaturanva.Common.Contestants.PlayerManagement;
 using Zaturanva.Common.Pieces;
+
 using static LanguageExt.Prelude;
 
 namespace Zaturanva.Common.Armies;
@@ -14,12 +18,12 @@ public static class ArmyFactory
 		Color color,
 		Dictionary<Coordinates, Type> pieceTypeByInitialCoordinates
 	)
-		=> Try(
-			() => new Army()
+		=> Try<Army>(
+			() => new()
 			{
-				Owner = owner,
+				Owner = Guard.Against.Null(owner),
 				Color = color,
-				Pieces = pieceTypeByInitialCoordinates
+				Pieces = Guard.Against.Null(pieceTypeByInitialCoordinates)
 					.Select(
 						kv => PieceFactory.Create(owner, kv)
 							.Match(

@@ -31,12 +31,4 @@ internal static class TeamUtility
 		=> team == Team.Achromatics
 			? Team.Vivids
 			: Team.Achromatics;
-
-	internal static HashSet<Color> GetColors(this Team team)
-		=> team switch
-		{
-			Team.Achromatics => ColorUtility.Achromatics,
-			Team.Vivids => ColorUtility.Vivids,
-			_ => throw new TeamException("Unknown Team."),
-		};
 }

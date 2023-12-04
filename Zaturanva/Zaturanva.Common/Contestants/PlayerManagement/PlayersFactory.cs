@@ -6,8 +6,6 @@ using Zaturanva.Common.Extensions;
 
 using static LanguageExt.Prelude;
 
-using Generic = System.Collections.Generic;
-
 namespace Zaturanva.Common.Contestants.PlayerManagement;
 
 public static class PlayersFactory
@@ -40,12 +38,12 @@ public static class PlayersFactory
 				}
 			);
 
-	private static IEnumerable<IPlayer> ShufflePlayersAndAssignColors(
+	private static Players ShufflePlayersAndAssignColors(
 		IReadOnlyDictionary<Team, List<IPlayer>> teamsByKey,
 		Team teamKey
 	)
 	{
-		Generic.HashSet<Color> teamColors
+		IEnumerable<Color> teamColors
 			= teamKey.GetColors();
 		IPlayer[] shuffledPlayers = teamsByKey[teamKey]
 			.Shuffle()

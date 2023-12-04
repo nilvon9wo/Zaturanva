@@ -10,18 +10,15 @@
 	</PropertyGroup>
 
 	<ItemGroup>
-		<Compile Remove="TestUtilites\NewFolder\**" />
-		<EmbeddedResource Remove="TestUtilites\NewFolder\**" />
-			  <Compile Remove="TestUtilities\NewFolder\**" />
-	  <EmbeddedResource Remove="TestUtilities\NewFolder\**" />
-	  <None Remove="TestUtilities\NewFolder\**" />
+		<Compile Remove="NewFolder\**" />
+		<EmbeddedResource Remove="NewFolder\**" />
+		<None Remove="NewFolder\**" />
 	</ItemGroup>
 
 	<ItemGroup>
-		<PackageReference Include="Ardalis.GuardClauses" Version="4.2.0" />
-		<PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.8.0" />
-		<PackageReference Include="xunit" Version="2.6.2" />
-		<PackageReference Include="xunit.runner.visualstudio" Version="2.5.4">
+		<PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.6.0" />
+		<PackageReference Include="xunit" Version="2.4.2" />
+		<PackageReference Include="xunit.runner.visualstudio" Version="2.4.5">
 			<IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
 			<PrivateAssets>all</PrivateAssets>
 		</PackageReference>
@@ -33,6 +30,7 @@
 
 	<ItemGroup>
 		<ProjectReference Include="..\Zaturanva.Common\Zaturanva.Common.csproj" />
+		<ProjectReference Include="..\Zaturanva.Engine\Zaturanva.Engine.csproj" />
 	</ItemGroup>
 
 </Project>

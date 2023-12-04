@@ -1,4 +1,7 @@
-﻿using System.Collections;
+﻿using Ardalis.GuardClauses;
+
+using System.Collections;
+
 using Zaturanva.Common.Colors;
 
 namespace Zaturanva.Common.Contestants.PlayerManagement;
@@ -9,8 +12,8 @@ public class Players : IEnumerable<IPlayer>
 
 	public void Add(IPlayer player)
 	{
-		ArgumentNullException.ThrowIfNull(player);
-		HashSet<Color> colors = player.Colors;
+		HashSet<Color> colors = Guard.Against.Null(player)
+			.Colors;
 		if (colors.Count < 1)
 		{
 			throw new ArgumentException(
@@ -27,9 +30,7 @@ public class Players : IEnumerable<IPlayer>
 
 	public void AddRange(IEnumerable<IPlayer> players)
 	{
-		ArgumentNullException.ThrowIfNull(players);
-
-		foreach (IPlayer player in players)
+		foreach (IPlayer player in Guard.Against.Null(players))
 		{
 			Add(player);
 		}
