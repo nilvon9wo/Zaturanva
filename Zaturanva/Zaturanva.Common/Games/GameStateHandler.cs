@@ -82,7 +82,8 @@ public static class GameStateHandler
 		IPiece piece,
 		Coordinates coordinates
 	)
-		=> throw new NotImplementedException();
+		=> CanMove(game, piece)
+		   && piece.CanMoveTo(game, coordinates);
 
 	public static GameState MoveTo(
 		GameState game,

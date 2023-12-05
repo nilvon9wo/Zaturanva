@@ -1,11 +1,8 @@
 ﻿using Ardalis.GuardClauses;
-
 using LanguageExt;
-
 using Zaturanva.Common.ChessBoard;
 using Zaturanva.Common.Colors;
 using Zaturanva.Common.Contestants.PlayerManagement;
-
 using static LanguageExt.Prelude;
 
 namespace Zaturanva.Common.Pieces;
@@ -17,7 +14,7 @@ internal static class PieceFactory
 		Color color,
 		KeyValuePair<Coordinates, Type> coordinateTypePair
 	)
-		=> Try<IPiece>(
+		=> Try(
 			() =>
 			{
 				int rotationAngle = color.GetRotation();
@@ -26,9 +23,9 @@ internal static class PieceFactory
 
 				Type pieceType = coordinateTypePair.Value;
 				object pieceInstance = Activator.CreateInstance(pieceType)
-									   ?? throw new InvalidPieceException(
-										   $"Can't create {pieceType}."
-									   );
+				                       ?? throw new InvalidPieceException(
+					                       $"Can't create {pieceType}."
+				                       );
 				switch (pieceInstance)
 				{
 					case IPiece piece:
