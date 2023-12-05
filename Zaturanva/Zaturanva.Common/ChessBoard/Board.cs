@@ -27,7 +27,7 @@ public record Board
 		"IDE0052:Remove unread private members",
 		Justification = "<Pending>"
 	)]
-	private Dictionary<Coordinates, Color>? _thronesByCoordinates;
+	private Dictionary<Color, Coordinates>? _thronesByColor;
 
 	public static Board From(IEnumerable<IPiece> pieces)
 	{
@@ -49,14 +49,14 @@ public record Board
 						return coordinateDictionary;
 					}
 				),
-			_thronesByCoordinates = piecesArray
+			_thronesByColor = piecesArray
 				.Where(piece => piece is Raja)
 				.Aggregate(
-					new Dictionary<Coordinates, Color>(),
+					new Dictionary<Color, Coordinates>(),
 					(throneDictionary, piece) =>
 					{
 						_ = piece.Location.IfSome(
-							location => throneDictionary[location] = piece.Color
+							location => throneDictionary[piece.Color] = location
 						);
 						return throneDictionary;
 					}

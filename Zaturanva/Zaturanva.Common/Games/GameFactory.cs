@@ -26,14 +26,10 @@ public static class GameFactory
 			.Concat(whiteArmy.Pieces)
 			.Concat(blueArmy.Pieces)
 			.Concat(orangeArmy.Pieces);
-		return new()
-		{
-			Players = players,
-			BlackArmy = blackArmy,
-			WhiteArmy = whiteArmy,
-			BlueArmy = blueArmy,
-			OrangeArmy = orangeArmy,
-			Board = Board.From(allPieces),
-		};
+		return new Game() { Players = players, Board = Board.From(allPieces) }
+			.SetBlackArmy(blackArmy)
+			.SetBlueArmy(blueArmy)
+			.SetOrangeArmy(orangeArmy)
+			.SetWhiteArmy(whiteArmy);
 	}
 }

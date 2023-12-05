@@ -13,11 +13,9 @@ public interface IPiece
 	public Option<Coordinates> Location { get; set; }
 	public bool CanMoveTo(Game game, Coordinates destination);
 
-	public Try<IPiece> MoveTo(Game game, Coordinates destination);
+	public Try<Game> MoveTo(Game game, Coordinates destination);
 
 	public IPlayer Owner { get; set; }
-
-	public bool CanBeMovedBy(Game game, IPlayer player);
 
 	public Option<IPlayer> CapturedBy { get; set; }
 }

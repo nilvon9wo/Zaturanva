@@ -1,4 +1,5 @@
 ﻿using LanguageExt;
+
 using Zaturanva.Common.Colors;
 using Zaturanva.Common.Contestants.PlayerManagement;
 using Zaturanva.Common.Tests.TestUtilities;
@@ -35,7 +36,7 @@ public class PlayersFactoryTests
 				);
 				Assert.True(players.All(player => player.Colors.Count == 1));
 			},
-			ex => Assert.True(false, $"Unexpected exception: {ex}")
+			ex => Assert.Fail($"Unexpected exception: {ex}")
 		);
 	}
 
@@ -75,7 +76,7 @@ public class PlayersFactoryTests
 					distinctPlayers.Sum(player => player.Colors.Count)
 				);
 			},
-			ex => Assert.True(false, $"Unexpected exception: {ex}")
+			ex => Assert.Fail($"Unexpected exception: {ex}")
 		);
 	}
 
@@ -114,7 +115,7 @@ public class PlayersFactoryTests
 				_ = Assert.Single(player3.Colors);
 				Assert.Equal(4, players.CountUniqueColors());
 			},
-			ex => Assert.True(false, $"Unexpected exception: {ex}")
+			ex => Assert.Fail($"Unexpected exception: {ex}")
 		);
 	}
 }

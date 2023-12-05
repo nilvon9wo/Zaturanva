@@ -23,6 +23,6 @@ public class Boat : IPiece
 	public bool CanMoveTo(Game game, Coordinates destination)
 		=> throw new NotImplementedException();
 
-	public Try<IPiece> MoveTo(Game game, Coordinates destination)
+	public Try<Game> MoveTo(Game game, Coordinates destination)
 		=> throw new NotImplementedException();
 }

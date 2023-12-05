@@ -1,6 +1,8 @@
 ﻿using Zaturanva.Common.Armies;
 using Zaturanva.Common.ChessBoard;
+using Zaturanva.Common.Colors;
 using Zaturanva.Common.Contestants.PlayerManagement;
+using Zaturanva.Common.Contestants.TeamManagement;
 
 namespace Zaturanva.Common.Games;
 
@@ -8,18 +10,61 @@ public class Game
 {
 	public required Players Players { get; init; }
 
-	public IPlayer? CurrentPlayer { get; set; }
+	public IPlayer? CurrentTurnPlayer { get; set; }
+
+	public IPlayer? WaitingForPlayer { get; set; }
+	public TurnPhase TurnPhase { get; set; }
 
 	public required Board Board { get; init; }
 
-	public required Army BlackArmy { get; init; }
-	public required Army WhiteArmy { get; init; }
-	public required Army BlueArmy { get; init; }
-	public required Army OrangeArmy { get; init; }
+	private readonly Dictionary<Color, Army> _armyByColor = new();
 
-	public Alliance Achromatic
-		=> new() { BlackArmy, WhiteArmy };
+	public Game SetBlackArmy(Army army)
+	{
+		_armyByColor[Color.Black] = army;
+		return this;
+	}
 
-	public Alliance Vivids
-		=> new() { BlueArmy, OrangeArmy };
+	public Game SetWhiteArmy(Army army)
+	{
+		_armyByColor[Color.White] = army;
+		return this;
+	}
+
+	public Game SetBlueArmy(Army army)
+	{
+		_armyByColor[Color.Blue] = army;
+		return this;
+	}
+
+	public Game SetOrangeArmy(Army army)
+	{
+		_armyByColor[Color.Orange] = army;
+		return this;
+	}
+
+	public Army this[Color color]
+		=> _armyByColor[color];
+
+	private readonly Dictionary<Team, Alliance> _allianceByTeam = new();
+
+	public Alliance this[Team team]
+	{
+		get
+		{
+			if (_allianceByTeam.Count == 0)
+			{
+				_allianceByTeam[Team.Achromatics] = new()
+				{
+					_armyByColor[Color.Black], _armyByColor[Color.White],
+				};
+				_allianceByTeam[Team.Vivids] = new()
+				{
+					_armyByColor[Color.Blue], _armyByColor[Color.Orange],
+				};
+			}
+
+			return _allianceByTeam[team];
+		}
+	}
 }

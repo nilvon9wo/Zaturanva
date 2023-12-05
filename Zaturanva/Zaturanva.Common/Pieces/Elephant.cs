@@ -17,12 +17,9 @@ public class Elephant : IPiece
 
 	public required Option<Coordinates> Location { get; set; }
 
-	public bool CanBeMovedBy(Game game, IPlayer player)
-		=> throw new NotImplementedException();
-
 	public bool CanMoveTo(Game game, Coordinates destination)
 		=> throw new NotImplementedException();
 
-	public Try<IPiece> MoveTo(Game game, Coordinates destination)
+	public Try<Game> MoveTo(Game game, Coordinates destination)
 		=> throw new NotImplementedException();
 }

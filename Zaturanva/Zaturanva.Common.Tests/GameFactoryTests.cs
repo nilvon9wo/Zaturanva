@@ -30,28 +30,28 @@ public class GameFactoryTests
 		_ = result.Match(
 			game =>
 			{
-				Assert.NotNull(game.BlackArmy);
-				Assert.NotNull(game.WhiteArmy);
-				Assert.NotNull(game.BlueArmy);
-				Assert.NotNull(game.OrangeArmy);
+				Assert.NotNull(game[Color.Black]);
+				Assert.NotNull(game[Color.White]);
+				Assert.NotNull(game[Color.Blue]);
+				Assert.NotNull(game[Color.Orange]);
 
 				AssertCorrectArmy(
-					game.BlackArmy,
+					game[Color.Black],
 					TestUtilities.GameConfiguration
 						.BlackArmyPlacements
 				);
 				AssertCorrectArmy(
-					game.WhiteArmy,
+					game[Color.White],
 					TestUtilities.GameConfiguration
 						.WhiteArmyPlacements
 				);
 				AssertCorrectArmy(
-					game.BlueArmy,
+					game[Color.Blue],
 					TestUtilities.GameConfiguration
 						.BlueArmyPlacements
 				);
 				AssertCorrectArmy(
-					game.OrangeArmy,
+					game[Color.Orange],
 					TestUtilities.GameConfiguration
 						.OrangeArmyPlacements
 				);
