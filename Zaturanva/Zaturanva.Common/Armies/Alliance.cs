@@ -7,10 +7,10 @@ public class Alliance : IEnumerable<Army>
 	private readonly HashSet<Army> _armies = new();
 
 	public IEnumerator<Army> GetEnumerator()
-		=> throw new NotImplementedException();
+		=> _armies.GetEnumerator();
 
 	IEnumerator IEnumerable.GetEnumerator()
-		=> throw new NotImplementedException();
+		=> GetEnumerator();
 
 	public void Add(Army army)
 		=> _armies.Add(army);

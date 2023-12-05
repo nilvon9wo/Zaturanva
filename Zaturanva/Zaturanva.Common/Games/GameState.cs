@@ -1,4 +1,6 @@
-﻿using Zaturanva.Common.Armies;
+﻿using System.Diagnostics.CodeAnalysis;
+
+using Zaturanva.Common.Armies;
 using Zaturanva.Common.ChessBoard;
 using Zaturanva.Common.Colors;
 using Zaturanva.Common.Contestants.PlayerManagement;
@@ -47,27 +49,39 @@ public class GameState
 	public Army this[Color color]
 		=> _armyByColor[color];
 
-	private readonly Dictionary<Team, Alliance> _allianceByTeam = new();
+	[SuppressMessage(
+		"Style",
+		"IDE1006:Naming Styles",
+		Justification = "<Pending>"
+	)]
+	// ReSharper disable once InconsistentNaming
+	private Dictionary<Team, Alliance>? __allianceByTeam;
 
-	public Alliance this[Team team]
+	private Dictionary<Team, Alliance> _allianceByTeam
 	{
 		get
 		{
-			if (_allianceByTeam.Count == 0)
+			__allianceByTeam ??= new()
 			{
-				_allianceByTeam[Team.Achromatics] = new()
+				[Team.Achromatics]
+					= new()
+					{
+						_armyByColor[Color.Black],
+						_armyByColor[Color.White],
+					},
+				[Team.Vivids] = new()
 				{
-					_armyByColor[Color.Black], _armyByColor[Color.White],
-				};
-				_allianceByTeam[Team.Vivids] = new()
-				{
-					_armyByColor[Color.Blue], _armyByColor[Color.Orange],
-				};
-			}
+					_armyByColor[Color.Blue],
+					_armyByColor[Color.Orange],
+				},
+			};
 
-			return _allianceByTeam[team];
+			return __allianceByTeam;
 		}
 	}
+
+	public Alliance this[Team team]
+		=> _allianceByTeam[team];
 
 	public Alliance FindAllianceFor(Color color)
 		=> _allianceByTeam.Values.First(

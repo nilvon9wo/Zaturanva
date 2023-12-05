@@ -9,7 +9,7 @@ namespace Zaturanva.Common.Pieces;
 
 public interface IPiece
 {
-	public Color Color { get; }
+	public Color Color { get; set; }
 	public Option<Coordinates> Location { get; set; }
 	public bool CanMoveTo(GameState game, Coordinates destination);
 

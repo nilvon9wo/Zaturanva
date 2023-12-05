@@ -9,7 +9,7 @@ namespace Zaturanva.Common.Pieces;
 
 public class Pawn : IPiece
 {
-	public Color Color { get; init; }
+	 public Color Color { get; set; }
 
 	public required IPlayer Owner { get; set; }
 

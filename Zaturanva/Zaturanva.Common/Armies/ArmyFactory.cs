@@ -55,11 +55,7 @@ public static class ArmyFactory
 	)
 	{
 		int rotationAngle = color.GetRotation();
-		return PieceFactory.Create(
-				owner,
-				coordinateTypePair.Value,
-				coordinateTypePair.Key.Rotate(rotationAngle)
-			)
+		return PieceFactory.Create(owner, color, coordinateTypePair)
 			.Match(
 				piece => piece,
 				exception => throw exception

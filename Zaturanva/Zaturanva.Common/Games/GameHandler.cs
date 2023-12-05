@@ -7,7 +7,7 @@ using Zaturanva.Common.Pieces;
 
 namespace Zaturanva.Common.Games;
 
-public class GameHandler
+public static class GameHandler
 {
 	public static bool CanMove(GameState game, IPiece piece)
 	{
@@ -15,7 +15,6 @@ public class GameHandler
 		_ = Guard.Against.Null(piece);
 		Color currentPlayerColor = Guard.Against.Null(game.WaitingForColor);
 
-		_ = piece.Owner;
 		return game.TurnPhase switch
 		{
 			TurnPhase.FirstMove
@@ -78,10 +77,14 @@ public class GameHandler
 		return currentAlliance == pieceAlliance;
 	}
 
-	public bool CanMoveTo(GameState game, IPiece piece, Coordinates coordinates)
+	public static bool CanMoveTo(
+		GameState game,
+		IPiece piece,
+		Coordinates coordinates
+	)
 		=> throw new NotImplementedException();
 
-	public GameState MoveTo(
+	public static GameState MoveTo(
 		GameState game,
 		IPiece piece,
 		Coordinates coordinates

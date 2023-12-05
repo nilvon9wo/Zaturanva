@@ -1,4 +1,5 @@
 ﻿using LanguageExt;
+
 using Zaturanva.Common.ChessBoard;
 using Zaturanva.Common.Colors;
 using Zaturanva.Common.Contestants.PlayerManagement;
@@ -8,7 +9,7 @@ namespace Zaturanva.Common.Pieces;
 
 public class Boat : IPiece
 {
-	public Color Color { get; init; }
+	public Color Color { get; set; }
 
 	public required IPlayer Owner { get; set; }
 

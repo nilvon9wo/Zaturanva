@@ -59,6 +59,6 @@ public record Board
 		};
 	}
 
-	internal Coordinates GetThroneLocation(Color pieceColor)
+	public Coordinates GetThroneLocation(Color pieceColor)
 		=> _thronesByColor![pieceColor];
 }

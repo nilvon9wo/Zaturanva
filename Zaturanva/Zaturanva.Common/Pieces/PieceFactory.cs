@@ -3,6 +3,7 @@
 using LanguageExt;
 
 using Zaturanva.Common.ChessBoard;
+using Zaturanva.Common.Colors;
 using Zaturanva.Common.Contestants.PlayerManagement;
 
 using static LanguageExt.Prelude;
@@ -13,18 +14,17 @@ internal static class PieceFactory
 {
 	internal static Try<IPiece> Create(
 		IPlayer owner,
-		KeyValuePair<Coordinates, Type> coordinatesTypePair
+		Color color,
+		KeyValuePair<Coordinates, Type> coordinateTypePair
 	)
-		=> Create(owner, coordinatesTypePair.Value, coordinatesTypePair.Key);
-
-	internal static Try<IPiece> Create(
-		IPlayer owner,
-		Type pieceType,
-		Coordinates coordinates
-	)
-		=> Try(
+		=> Try<IPiece>(
 			() =>
 			{
+				int rotationAngle = color.GetRotation();
+				Coordinates coordinates
+					= coordinateTypePair.Key.Rotate(rotationAngle);
+
+				Type pieceType = coordinateTypePair.Value;
 				object pieceInstance = Activator.CreateInstance(pieceType)
 									   ?? throw new InvalidPieceException(
 										   $"Can't create {pieceType}."
@@ -33,6 +33,7 @@ internal static class PieceFactory
 				{
 					case IPiece piece:
 						piece.Location = Option<Coordinates>.Some(coordinates);
+						piece.Color = color;
 						piece.Owner = Guard.Against.Null(owner);
 						return piece;
 					default:
