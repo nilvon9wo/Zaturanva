@@ -17,8 +17,8 @@ public class Boat : IPiece
 
 	public required Option<Coordinates> Location { get; set; }
 
-	public bool CanBeMovedBy(Game game, IPlayer player)
-		=> throw new NotImplementedException();
+	public Option<Color> SharedWithForBoatTriumph { get; set; }
+		= Option<Color>.None;
 
 	public bool CanMoveTo(Game game, Coordinates destination)
 		=> throw new NotImplementedException();

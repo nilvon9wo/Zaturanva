@@ -35,11 +35,22 @@ public class GameHandler
 	}
 
 	private static bool IsNormalMovement(Game game, IPiece piece)
+		=> (game.WaitingForColor == piece.Color)
+		   || IsOccupierMovement(game, piece)
+		   || IsRegent(game, piece.Color)
+		   || IsBoatTriumphReward(game, piece);
+
+	private static bool IsBoatTriumphReward(Game game, IPiece piece)
+		=> piece is Boat boat
+		   && (boat.SharedWithForBoatTriumph == game.WaitingForColor);
+
+	private static bool IsOccupierMovement(Game game, IPiece piece)
 	{
 		Color currentPlayerColor = Guard.Against.Null(game.WaitingForColor);
-		return (currentPlayerColor == piece.Color)
-			   || IsOccupierMovement(game, piece)
-			   || IsRegent(game, piece.Color);
+		Raja currentPlayerRaja = game[currentPlayerColor].Raja;
+		Coordinates pieceThroneLocation
+			= game.Board.GetThroneLocation(piece.Color);
+		return currentPlayerRaja.Location == pieceThroneLocation;
 	}
 
 	private static bool IsRegent(Game game, Color pieceColor)
@@ -53,20 +64,18 @@ public class GameHandler
 		bool targetColorPlayerRajaIsNotFree = targetColorPlayerRaja.CapturedBy
 											  != LanguageExt.Option<Color>.None;
 
-		Alliance currentAlliance = game.FindAllianceFor(currentPlayerColor);
-		Alliance pieceAlliance = game.FindAllianceFor(pieceColor);
+		bool areAllies = AreAllies(game, pieceColor);
 		return currentPlayerRajaIsFree
 			   && targetColorPlayerRajaIsNotFree
-			   && (currentAlliance == pieceAlliance);
+			   && areAllies;
 	}
 
-	private static bool IsOccupierMovement(Game game, IPiece piece)
+	private static bool AreAllies(Game game, Color pieceColor)
 	{
 		Color currentPlayerColor = Guard.Against.Null(game.WaitingForColor);
-		Raja currentPlayerRaja = game[currentPlayerColor].Raja;
-		Coordinates pieceThroneLocation
-			= game.Board.GetThroneLocation(piece.Color);
-		return currentPlayerRaja.Location == pieceThroneLocation;
+		Alliance currentAlliance = game.FindAllianceFor(currentPlayerColor);
+		Alliance pieceAlliance = game.FindAllianceFor(pieceColor);
+		return currentAlliance == pieceAlliance;
 	}
 
 	public bool CanMoveTo(Game game, IPiece piece, Coordinates coordinates)
