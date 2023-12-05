@@ -6,7 +6,7 @@ using Zaturanva.Common.Contestants.TeamManagement;
 
 namespace Zaturanva.Common.Games;
 
-public class Game
+public class GameState
 {
 	public required Players Players { get; init; }
 
@@ -20,25 +20,25 @@ public class Game
 
 	private readonly Dictionary<Color, Army> _armyByColor = new();
 
-	public Game SetBlackArmy(Army army)
+	public GameState SetBlackArmy(Army army)
 	{
 		_armyByColor[Color.Black] = army;
 		return this;
 	}
 
-	public Game SetWhiteArmy(Army army)
+	public GameState SetWhiteArmy(Army army)
 	{
 		_armyByColor[Color.White] = army;
 		return this;
 	}
 
-	public Game SetBlueArmy(Army army)
+	public GameState SetBlueArmy(Army army)
 	{
 		_armyByColor[Color.Blue] = army;
 		return this;
 	}
 
-	public Game SetOrangeArmy(Army army)
+	public GameState SetOrangeArmy(Army army)
 	{
 		_armyByColor[Color.Orange] = army;
 		return this;

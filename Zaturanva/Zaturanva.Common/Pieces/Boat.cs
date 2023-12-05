@@ -1,5 +1,4 @@
 ﻿using LanguageExt;
-
 using Zaturanva.Common.ChessBoard;
 using Zaturanva.Common.Colors;
 using Zaturanva.Common.Contestants.PlayerManagement;
@@ -20,9 +19,9 @@ public class Boat : IPiece
 	public Option<Color> SharedWithForBoatTriumph { get; set; }
 		= Option<Color>.None;
 
-	public bool CanMoveTo(Game game, Coordinates destination)
+	public bool CanMoveTo(GameState game, Coordinates destination)
 		=> throw new NotImplementedException();
 
-	public Try<Game> MoveTo(Game game, Coordinates destination)
+	public Try<GameState> MoveTo(GameState game, Coordinates destination)
 		=> throw new NotImplementedException();
 }

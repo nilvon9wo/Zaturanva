@@ -23,7 +23,7 @@ public class GameFactoryTests
 		};
 
 		// Act
-		Try<Game> result
+		Try<GameState> result
 			= GameFactory.CreateFor(players);
 
 		// Assert

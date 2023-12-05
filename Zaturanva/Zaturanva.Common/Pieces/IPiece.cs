@@ -11,9 +11,9 @@ public interface IPiece
 {
 	public Color Color { get; }
 	public Option<Coordinates> Location { get; set; }
-	public bool CanMoveTo(Game game, Coordinates destination);
+	public bool CanMoveTo(GameState game, Coordinates destination);
 
-	public Try<Game> MoveTo(Game game, Coordinates destination);
+	public Try<GameState> MoveTo(GameState game, Coordinates destination);
 
 	public IPlayer Owner { get; set; }
 

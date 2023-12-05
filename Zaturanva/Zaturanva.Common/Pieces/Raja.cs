@@ -17,9 +17,9 @@ public class Raja : IPiece
 
 	public required Option<Coordinates> Location { get; set; }
 
-	public bool CanMoveTo(Game game, Coordinates destination)
+	public bool CanMoveTo(GameState game, Coordinates destination)
 		=> throw new NotImplementedException();
 
-	public Try<Game> MoveTo(Game game, Coordinates destination)
+	public Try<GameState> MoveTo(GameState game, Coordinates destination)
 		=> throw new NotImplementedException();
 }

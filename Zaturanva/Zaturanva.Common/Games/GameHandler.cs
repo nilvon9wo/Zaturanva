@@ -9,7 +9,7 @@ namespace Zaturanva.Common.Games;
 
 public class GameHandler
 {
-	public static bool CanMove(Game game, IPiece piece)
+	public static bool CanMove(GameState game, IPiece piece)
 	{
 		_ = Guard.Against.Null(game);
 		_ = Guard.Against.Null(piece);
@@ -34,17 +34,17 @@ public class GameHandler
 		};
 	}
 
-	private static bool IsNormalMovement(Game game, IPiece piece)
+	private static bool IsNormalMovement(GameState game, IPiece piece)
 		=> (game.WaitingForColor == piece.Color)
 		   || IsOccupierMovement(game, piece)
 		   || IsRegent(game, piece.Color)
 		   || IsBoatTriumphReward(game, piece);
 
-	private static bool IsBoatTriumphReward(Game game, IPiece piece)
+	private static bool IsBoatTriumphReward(GameState game, IPiece piece)
 		=> piece is Boat boat
 		   && (boat.SharedWithForBoatTriumph == game.WaitingForColor);
 
-	private static bool IsOccupierMovement(Game game, IPiece piece)
+	private static bool IsOccupierMovement(GameState game, IPiece piece)
 	{
 		Color currentPlayerColor = Guard.Against.Null(game.WaitingForColor);
 		Raja currentPlayerRaja = game[currentPlayerColor].Raja;
@@ -53,7 +53,7 @@ public class GameHandler
 		return currentPlayerRaja.Location == pieceThroneLocation;
 	}
 
-	private static bool IsRegent(Game game, Color pieceColor)
+	private static bool IsRegent(GameState game, Color pieceColor)
 	{
 		Color currentPlayerColor = Guard.Against.Null(game.WaitingForColor);
 		Raja currentPlayerRaja = game[currentPlayerColor].Raja;
@@ -70,7 +70,7 @@ public class GameHandler
 			   && areAllies;
 	}
 
-	private static bool AreAllies(Game game, Color pieceColor)
+	private static bool AreAllies(GameState game, Color pieceColor)
 	{
 		Color currentPlayerColor = Guard.Against.Null(game.WaitingForColor);
 		Alliance currentAlliance = game.FindAllianceFor(currentPlayerColor);
@@ -78,9 +78,13 @@ public class GameHandler
 		return currentAlliance == pieceAlliance;
 	}
 
-	public bool CanMoveTo(Game game, IPiece piece, Coordinates coordinates)
+	public bool CanMoveTo(GameState game, IPiece piece, Coordinates coordinates)
 		=> throw new NotImplementedException();
 
-	public Game MoveTo(Game game, IPiece piece, Coordinates coordinates)
+	public GameState MoveTo(
+		GameState game,
+		IPiece piece,
+		Coordinates coordinates
+	)
 		=> throw new NotImplementedException();
 }
