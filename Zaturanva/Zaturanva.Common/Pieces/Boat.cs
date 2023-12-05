@@ -13,7 +13,7 @@ public class Boat : IPiece
 
 	public required IPlayer Owner { get; set; }
 
-	public Option<IPlayer> CapturedBy { get; set; } = Option<IPlayer>.None;
+	public Option<Color> CapturedBy { get; set; } = Option<Color>.None;
 
 	public required Option<Coordinates> Location { get; set; }
 

@@ -17,5 +17,5 @@ public interface IPiece
 
 	public IPlayer Owner { get; set; }
 
-	public Option<IPlayer> CapturedBy { get; set; }
+	public Option<Color> CapturedBy { get; set; }
 }

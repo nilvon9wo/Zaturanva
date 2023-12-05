@@ -22,11 +22,6 @@ public record Board
 	)]
 	private Dictionary<Coordinates, Cell>? _cellByCoordinates;
 
-	[SuppressMessage(
-		"CodeQuality",
-		"IDE0052:Remove unread private members",
-		Justification = "<Pending>"
-	)]
 	private Dictionary<Color, Coordinates>? _thronesByColor;
 
 	public static Board From(IEnumerable<IPiece> pieces)
@@ -63,4 +58,7 @@ public record Board
 				),
 		};
 	}
+
+	internal Coordinates GetThroneLocation(Color pieceColor)
+		=> _thronesByColor![pieceColor];
 }

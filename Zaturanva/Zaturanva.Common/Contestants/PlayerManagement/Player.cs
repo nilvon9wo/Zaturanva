@@ -1,5 +1,4 @@
 ﻿using Zaturanva.Common.Colors;
-using Zaturanva.Common.Games;
 
 namespace Zaturanva.Common.Contestants.PlayerManagement;
 
@@ -16,10 +15,4 @@ public class Player : IPlayer
 
 	public bool IsPlaying(Color color)
 		=> Colors.Contains(color);
-
-	public bool IsRegent(Game game, Color color)
-		=> throw new NotImplementedException();
-
-	public bool OccupiesThrone(Game game, Color color)
-		=> throw new NotImplementedException();
 }

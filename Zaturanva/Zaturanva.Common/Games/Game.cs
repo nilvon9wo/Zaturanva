@@ -10,9 +10,10 @@ public class Game
 {
 	public required Players Players { get; init; }
 
-	public IPlayer? CurrentTurnPlayer { get; set; }
+	public Color? CurrentTurnColor { get; set; }
 
-	public IPlayer? WaitingForPlayer { get; set; }
+	public Color? WaitingForColor { get; set; }
+
 	public TurnPhase TurnPhase { get; set; }
 
 	public required Board Board { get; init; }

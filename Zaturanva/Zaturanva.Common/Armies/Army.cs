@@ -17,6 +17,9 @@ public class Army
 	public required IPlayer Owner { get; set; }
 	public required Generic.HashSet<IPiece> Pieces { get; init; }
 
+	public Raja Raja
+		=> (Raja)Pieces.First(piece => piece is Raja);
+
 	public Option<IPiece> GetPieceAt(string targetLocation)
 	{
 		IPiece? piece = Pieces
