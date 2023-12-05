@@ -13,7 +13,7 @@ public static class GameHandler
 	{
 		_ = Guard.Against.Null(game);
 		_ = Guard.Against.Null(piece);
-		Color currentPlayerColor = Guard.Against.Null(game.WaitingForColor);
+		Color currentPlayerColor = Guard.Against.Null(game.ActiveColor);
 
 		return game.TurnPhase switch
 		{
@@ -21,9 +21,9 @@ public static class GameHandler
 				=> IsNormalMovement(game, piece),
 
 			TurnPhase.SecondMove
-				=> ((game.CurrentTurnColor == currentPlayerColor)
+				=> ((game.FocusColor == currentPlayerColor)
 					&& IsNormalMovement(game, piece))
-				   || ((game.CurrentTurnColor != currentPlayerColor)
+				   || ((game.FocusColor != currentPlayerColor)
 					   && IsOccupierMovement(game, piece)),
 
 			_
@@ -34,18 +34,18 @@ public static class GameHandler
 	}
 
 	private static bool IsNormalMovement(GameState game, IPiece piece)
-		=> (game.WaitingForColor == piece.Color)
+		=> (game.ActiveColor == piece.Color)
 		   || IsOccupierMovement(game, piece)
 		   || IsRegent(game, piece.Color)
 		   || IsBoatTriumphReward(game, piece);
 
 	private static bool IsBoatTriumphReward(GameState game, IPiece piece)
 		=> piece is Boat boat
-		   && (boat.SharedWithForBoatTriumph == game.WaitingForColor);
+		   && (boat.SharedWithForBoatTriumph == game.ActiveColor);
 
 	private static bool IsOccupierMovement(GameState game, IPiece piece)
 	{
-		Color currentPlayerColor = Guard.Against.Null(game.WaitingForColor);
+		Color currentPlayerColor = Guard.Against.Null(game.ActiveColor);
 		Raja currentPlayerRaja = game[currentPlayerColor].Raja;
 		Coordinates pieceThroneLocation
 			= game.Board.GetThroneLocation(piece.Color);
@@ -54,7 +54,7 @@ public static class GameHandler
 
 	private static bool IsRegent(GameState game, Color pieceColor)
 	{
-		Color currentPlayerColor = Guard.Against.Null(game.WaitingForColor);
+		Color currentPlayerColor = Guard.Against.Null(game.ActiveColor);
 		Raja currentPlayerRaja = game[currentPlayerColor].Raja;
 		bool currentPlayerRajaIsFree = currentPlayerRaja.CapturedBy
 									   == LanguageExt.Option<Color>.None;
@@ -71,7 +71,7 @@ public static class GameHandler
 
 	private static bool AreAllies(GameState game, Color pieceColor)
 	{
-		Color currentPlayerColor = Guard.Against.Null(game.WaitingForColor);
+		Color currentPlayerColor = Guard.Against.Null(game.ActiveColor);
 		Alliance currentAlliance = game.FindAllianceFor(currentPlayerColor);
 		Alliance pieceAlliance = game.FindAllianceFor(pieceColor);
 		return currentAlliance == pieceAlliance;

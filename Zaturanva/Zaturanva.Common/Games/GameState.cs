@@ -12,9 +12,9 @@ public class GameState
 {
 	public required Players Players { get; init; }
 
-	public Color? CurrentTurnColor { get; set; }
+	public Color? FocusColor { get; set; }
 
-	public Color? WaitingForColor { get; set; }
+	public Color? ActiveColor { get; set; }
 
 	public TurnPhase TurnPhase { get; set; }
 
@@ -71,8 +71,7 @@ public class GameState
 					},
 				[Team.Vivids] = new()
 				{
-					_armyByColor[Color.Blue],
-					_armyByColor[Color.Orange],
+					_armyByColor[Color.Blue], _armyByColor[Color.Orange],
 				},
 			};
 

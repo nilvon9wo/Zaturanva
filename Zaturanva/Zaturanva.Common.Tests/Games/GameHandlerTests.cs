@@ -19,12 +19,12 @@ public class GameHandlerTests
 	)
 	{
 		GameState game = SetupGameForNormalMovement();
-		const Color currentColor = Color.Black;
-		game.CurrentTurnColor = currentColor;
-		game.WaitingForColor = currentColor;
+		const Color focusColor = Color.Black;
+		game.FocusColor = focusColor;
+		game.ActiveColor = focusColor;
 		game.TurnPhase = turnPhase;
 
-		IPiece piece = game[currentColor]
+		IPiece piece = game[focusColor]
 			.Pieces.First(p => p is Pawn);
 
 		bool result = GameHandler.CanMove(game, piece);
@@ -40,9 +40,9 @@ public class GameHandlerTests
 	)
 	{
 		GameState game = SetupGameForNormalMovement();
-		const Color currentColor = Color.Black;
-		game.CurrentTurnColor = currentColor;
-		game.WaitingForColor = currentColor;
+		const Color focusColor = Color.Black;
+		game.FocusColor = focusColor;
+		game.ActiveColor = focusColor;
 		game.TurnPhase = turnPhase;
 
 		IPiece piece = game[Color.White]
@@ -61,9 +61,9 @@ public class GameHandlerTests
 	)
 	{
 		GameState game = SetupGameForNormalMovement();
-		const Color currentColor = Color.Black;
-		game.CurrentTurnColor = currentColor;
-		game.WaitingForColor = currentColor;
+		const Color focusColor = Color.Black;
+		game.FocusColor = focusColor;
+		game.ActiveColor = focusColor;
 		game.TurnPhase = turnPhase;
 
 		const Color allyColor = Color.White;
@@ -85,9 +85,9 @@ public class GameHandlerTests
 		)
 	{
 		GameState game = SetupGameForNormalMovement();
-		const Color currentColor = Color.Black;
-		game.CurrentTurnColor = currentColor;
-		game.WaitingForColor = currentColor;
+		const Color focusColor = Color.Black;
+		game.FocusColor = focusColor;
+		game.ActiveColor = focusColor;
 		game.TurnPhase = turnPhase;
 
 		const Color allyColor = Color.White;
@@ -108,9 +108,9 @@ public class GameHandlerTests
 	)
 	{
 		GameState game = SetupGameForNormalMovement();
-		const Color currentColor = Color.Black;
-		game.CurrentTurnColor = currentColor;
-		game.WaitingForColor = currentColor;
+		const Color focusColor = Color.Black;
+		game.FocusColor = focusColor;
+		game.ActiveColor = focusColor;
 		game.TurnPhase = turnPhase;
 
 		const Color allyColor = Color.White;
@@ -131,9 +131,9 @@ public class GameHandlerTests
 	)
 	{
 		GameState game = SetupGameForNormalMovement();
-		const Color currentColor = Color.Black;
-		game.CurrentTurnColor = currentColor;
-		game.WaitingForColor = currentColor;
+		const Color focusColor = Color.Black;
+		game.FocusColor = focusColor;
+		game.ActiveColor = focusColor;
 		game.TurnPhase = turnPhase;
 
 		const Color otherColor = Color.Blue;
@@ -154,9 +154,9 @@ public class GameHandlerTests
 	)
 	{
 		GameState game = SetupGameForNormalMovement();
-		const Color currentColor = Color.Black;
-		game.CurrentTurnColor = currentColor;
-		game.WaitingForColor = currentColor;
+		const Color focusColor = Color.Black;
+		game.FocusColor = focusColor;
+		game.ActiveColor = focusColor;
 		game.TurnPhase = turnPhase;
 
 		const Color allyColor = Color.White;
@@ -177,9 +177,9 @@ public class GameHandlerTests
 	)
 	{
 		GameState game = SetupGameForNormalMovement();
-		const Color currentColor = Color.Black;
-		game.CurrentTurnColor = currentColor;
-		game.WaitingForColor = currentColor;
+		const Color focusColor = Color.Black;
+		game.FocusColor = focusColor;
+		game.ActiveColor = focusColor;
 		game.TurnPhase = turnPhase;
 
 		const Color enemyColor = Color.Blue;
@@ -202,9 +202,9 @@ public class GameHandlerTests
 	)
 	{
 		GameState game = SetupGameForNormalMovement();
-		const Color currentColor = Color.Black;
-		game.CurrentTurnColor = currentColor;
-		game.WaitingForColor = currentColor;
+		const Color focusColor = Color.Black;
+		game.FocusColor = focusColor;
+		game.ActiveColor = focusColor;
 		game.TurnPhase = turnPhase;
 
 		const Color enemyColor = Color.Blue;
@@ -222,15 +222,37 @@ public class GameHandlerTests
 	{
 		GameState game = SetupGameForNormalMovement();
 		const Color occupierColor = Color.Black;
-		const Color currentColor = Color.Orange;
-		game.CurrentTurnColor = currentColor;
-		game.WaitingForColor = occupierColor;
+		const Color focusColor = Color.Orange;
+		game.FocusColor = focusColor;
+		game.ActiveColor = occupierColor;
 		game.TurnPhase = TurnPhase.SecondMove;
 
 		game[Color.Black].Raja.Location
-			= game.Board.GetThroneLocation(currentColor);
+			= game.Board.GetThroneLocation(focusColor);
 
-		IPiece piece = game[currentColor]
+		IPiece piece = game[focusColor]
+			.Pieces.First(p => p is Pawn);
+
+		bool result = GameHandler.CanMove(game, piece);
+
+		Assert.True(result);
+	}
+
+	[Fact]
+	public void
+		CanMove_ShouldReturnFalse_OccupiedPlayCantMakeOwnSecondMove()
+	{
+		GameState game = SetupGameForNormalMovement();
+		const Color occupierColor = Color.Black;
+		const Color focusColor = Color.Orange;
+		game.FocusColor = focusColor;
+		game.ActiveColor = occupierColor;
+		game.TurnPhase = TurnPhase.SecondMove;
+
+		game[Color.Black].Raja.Location
+			= game.Board.GetThroneLocation(focusColor);
+
+		IPiece piece = game[focusColor]
 			.Pieces.First(p => p is Pawn);
 
 		bool result = GameHandler.CanMove(game, piece);
@@ -243,19 +265,19 @@ public class GameHandlerTests
 	[InlineData(Color.Blue)]
 	[InlineData(Color.White)]
 	public void
-		CanMove_ShouldReturnFalse_OccupierMovesAnyPieceOtherThanCurrentColorThrone(
+		CanMove_ShouldReturnFalse_OccupierMovesAnyPieceOtherThanfocusColorThrone(
 			Color pieceColor
 		)
 	{
 		GameState game = SetupGameForNormalMovement();
 		const Color occupierColor = Color.Black;
-		const Color currentColor = Color.Orange;
-		game.CurrentTurnColor = currentColor;
-		game.WaitingForColor = occupierColor;
+		const Color focusColor = Color.Orange;
+		game.FocusColor = focusColor;
+		game.ActiveColor = occupierColor;
 		game.TurnPhase = TurnPhase.SecondMove;
 
 		game[Color.Black].Raja.Location
-			= game.Board.GetThroneLocation(currentColor);
+			= game.Board.GetThroneLocation(focusColor);
 
 		IPiece piece = game[pieceColor]
 			.Pieces.First(p => p is Pawn);
