@@ -7,7 +7,7 @@ using Zaturanva.Common.Pieces;
 
 namespace Zaturanva.Common.Games;
 
-public static class GameHandler
+public static class GameStateHandler
 {
 	public static bool CanMove(GameState game, IPiece piece)
 	{

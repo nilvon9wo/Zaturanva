@@ -27,7 +27,7 @@ public class GameHandlerTests
 		IPiece piece = game[focusColor]
 			.Pieces.First(p => p is Pawn);
 
-		bool result = GameHandler.CanMove(game, piece);
+		bool result = GameStateHandler.CanMove(game, piece);
 
 		Assert.True(result);
 	}
@@ -48,7 +48,7 @@ public class GameHandlerTests
 		IPiece piece = game[Color.White]
 			.Pieces.First(p => p is Pawn);
 
-		bool result = GameHandler.CanMove(game, piece);
+		bool result = GameStateHandler.CanMove(game, piece);
 
 		Assert.False(result);
 	}
@@ -71,7 +71,7 @@ public class GameHandlerTests
 			.Pieces.First(p => p is Pawn);
 		game[allyColor].Raja.CapturedBy = Option<Color>.Some(Color.Orange);
 
-		bool result = GameHandler.CanMove(game, piece);
+		bool result = GameStateHandler.CanMove(game, piece);
 
 		Assert.True(result);
 	}
@@ -95,7 +95,7 @@ public class GameHandlerTests
 			.Pieces.First(p => p is Pawn);
 		game[allyColor].Raja.CapturedBy = Option<Color>.None;
 
-		bool result = GameHandler.CanMove(game, piece);
+		bool result = GameStateHandler.CanMove(game, piece);
 
 		Assert.False(result);
 	}
@@ -118,7 +118,7 @@ public class GameHandlerTests
 			.Pieces.First(p => p is Boat);
 		boat.SharedWithForBoatTriumph = Option<Color>.Some(Color.Black);
 
-		bool result = GameHandler.CanMove(game, boat);
+		bool result = GameStateHandler.CanMove(game, boat);
 
 		Assert.True(result);
 	}
@@ -141,7 +141,7 @@ public class GameHandlerTests
 			.Pieces.First(p => p is Boat);
 		boat.SharedWithForBoatTriumph = Option<Color>.Some(Color.Orange);
 
-		bool result = GameHandler.CanMove(game, boat);
+		bool result = GameStateHandler.CanMove(game, boat);
 
 		Assert.False(result);
 	}
@@ -164,7 +164,7 @@ public class GameHandlerTests
 			.Pieces.First(p => p is Boat);
 		boat.SharedWithForBoatTriumph = Option<Color>.None;
 
-		bool result = GameHandler.CanMove(game, boat);
+		bool result = GameStateHandler.CanMove(game, boat);
 
 		Assert.False(result);
 	}
@@ -189,7 +189,7 @@ public class GameHandlerTests
 		IPiece piece = game[enemyColor]
 			.Pieces.First(p => p is Pawn);
 
-		bool result = GameHandler.CanMove(game, piece);
+		bool result = GameStateHandler.CanMove(game, piece);
 
 		Assert.True(result);
 	}
@@ -211,7 +211,7 @@ public class GameHandlerTests
 		IPiece piece = game[enemyColor]
 			.Pieces.First(p => p is Pawn);
 
-		bool result = GameHandler.CanMove(game, piece);
+		bool result = GameStateHandler.CanMove(game, piece);
 
 		Assert.False(result);
 	}
@@ -233,7 +233,7 @@ public class GameHandlerTests
 		IPiece piece = game[focusColor]
 			.Pieces.First(p => p is Pawn);
 
-		bool result = GameHandler.CanMove(game, piece);
+		bool result = GameStateHandler.CanMove(game, piece);
 
 		Assert.True(result);
 	}
@@ -255,7 +255,7 @@ public class GameHandlerTests
 		IPiece piece = game[focusColor]
 			.Pieces.First(p => p is Pawn);
 
-		bool result = GameHandler.CanMove(game, piece);
+		bool result = GameStateHandler.CanMove(game, piece);
 
 		Assert.True(result);
 	}
@@ -282,7 +282,7 @@ public class GameHandlerTests
 		IPiece piece = game[pieceColor]
 			.Pieces.First(p => p is Pawn);
 
-		bool result = GameHandler.CanMove(game, piece);
+		bool result = GameStateHandler.CanMove(game, piece);
 
 		Assert.False(result);
 	}

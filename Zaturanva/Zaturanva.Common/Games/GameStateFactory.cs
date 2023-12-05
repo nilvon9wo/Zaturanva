@@ -8,7 +8,7 @@ using Zaturanva.Common.Contestants.PlayerManagement;
 
 namespace Zaturanva.Common.Games;
 
-public static class GameFactory
+public static class GameStateFactory
 {
 	public static Try<GameState> CreateFor(IEnumerable<IPlayer> inputPlayers)
 		=> inputPlayers

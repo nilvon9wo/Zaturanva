@@ -1,5 +1,4 @@
 ﻿using LanguageExt;
-
 using Zaturanva.Common.Armies;
 using Zaturanva.Common.Colors;
 using Zaturanva.Common.Contestants.PlayerManagement;
@@ -24,7 +23,7 @@ public class GameFactoryTests
 
 		// Act
 		Try<GameState> result
-			= GameFactory.CreateFor(players);
+			= GameStateFactory.CreateFor(players);
 
 		// Assert
 		_ = result.Match(
