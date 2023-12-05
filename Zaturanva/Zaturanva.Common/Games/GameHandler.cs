@@ -1,10 +1,11 @@
 ﻿using Ardalis.GuardClauses;
 
+using Zaturanva.Common.Armies;
 using Zaturanva.Common.ChessBoard;
 using Zaturanva.Common.Colors;
-using Zaturanva.Common.Games;
+using Zaturanva.Common.Pieces;
 
-namespace Zaturanva.Common.Pieces;
+namespace Zaturanva.Common.Games;
 
 public class GameHandler
 {
@@ -52,10 +53,11 @@ public class GameHandler
 		bool targetColorPlayerRajaIsNotFree = targetColorPlayerRaja.CapturedBy
 											  != LanguageExt.Option<Color>.None;
 
-		const bool areAllies = false; // FIXME
+		Alliance currentAlliance = game.FindAllianceFor(currentPlayerColor);
+		Alliance pieceAlliance = game.FindAllianceFor(pieceColor);
 		return currentPlayerRajaIsFree
 			   && targetColorPlayerRajaIsNotFree
-			   && areAllies;
+			   && (currentAlliance == pieceAlliance);
 	}
 
 	private static bool IsOccupierMovement(Game game, IPiece piece)

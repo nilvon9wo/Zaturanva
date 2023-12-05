@@ -68,4 +68,9 @@ public class Game
 			return _allianceByTeam[team];
 		}
 	}
+
+	public Alliance FindAllianceFor(Color color)
+		=> _allianceByTeam.Values.First(
+			alliance => alliance.Contains(_armyByColor[color])
+		);
 }
