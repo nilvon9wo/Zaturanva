@@ -31,8 +31,10 @@ public record Board
 		"CA1043:Use Integral Or String Argument For Indexers",
 		Justification = "<Pending>"
 	)]
-	public Try<Cell> this[Coordinates coordinates]
-		=> Try(() => _cellByCoordinates[coordinates]);
+	public Option<Cell> this[Coordinates coordinates]
+		=> _cellByCoordinates.TryGetValue(coordinates, out Cell cell)
+			? Option<Cell>.Some(cell)
+			: Option<Cell>.None;
 
 	public static Board From(IEnumerable<IPiece> pieces)
 	{

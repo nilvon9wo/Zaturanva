@@ -21,5 +21,15 @@ public class Boat : IPiece
 		= Option<Color>.None;
 
 	public bool CanMoveTo(GameState game, Coordinates destination)
-		=> throw new NotImplementedException();
+		=> Location.Match(
+			currentLocation =>
+			{
+				int xDifference = Math.Abs(destination.X - currentLocation.X);
+				int yDifference = Math.Abs(destination.Y - currentLocation.Y);
+				return (xDifference == 2)
+					   && (yDifference == 2)
+					   && game.Board[destination].IsSome;
+			},
+			() => false
+		);
 }

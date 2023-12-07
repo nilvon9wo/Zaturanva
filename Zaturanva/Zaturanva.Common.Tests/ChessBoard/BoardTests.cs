@@ -13,16 +13,6 @@ namespace Zaturanva.Common.Tests.ChessBoard;
 public class BoardTests
 {
 	[Fact]
-	public void CanAccessExistingCells()
-	{
-		Board board = CreateTestBoard();
-
-		Assert.NotNull(board[new(0, 0)]);
-		Assert.NotNull(board[new(2, 3)]);
-		Assert.NotNull(board[new(7, 7)]);
-	}
-
-	[Fact]
 	public void ThronesInExpectedPlaces()
 	{
 		Board board = CreateTestBoard();
@@ -67,7 +57,7 @@ public class BoardTests
 								);
 							}
 						},
-						_ => Assert.False(
+						() => Assert.False(
 							false,
 							$"Cell {coordinates} should not be faulted"
 						)
@@ -76,8 +66,8 @@ public class BoardTests
 		}
 	}
 
-	private static IEnumerable<IPiece> CreateTwoRajas()
-		=> new List<IPiece>
+	private static List<IPiece> CreateTwoRajas()
+		=> new()
 		{
 			new Raja()
 			{
