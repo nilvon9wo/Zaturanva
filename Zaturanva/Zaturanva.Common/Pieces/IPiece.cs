@@ -13,8 +13,6 @@ public interface IPiece
 	public Option<Coordinates> Location { get; set; }
 	public bool CanMoveTo(GameState game, Coordinates destination);
 
-	public Try<GameState> MoveTo(GameState game, Coordinates destination);
-
 	public IPlayer Owner { get; set; }
 
 	public Option<Color> CapturedBy { get; set; }

@@ -265,7 +265,7 @@ public class GameHandlerTests
 	[InlineData(Color.Blue)]
 	[InlineData(Color.White)]
 	public void
-		CanMove_ShouldReturnFalse_OccupierMovesAnyPieceOtherThanfocusColorThrone(
+		CanMove_ShouldReturnFalse_OccupierMovesAnyPieceOtherThanFocusColorThrone(
 			Color pieceColor
 		)
 	{

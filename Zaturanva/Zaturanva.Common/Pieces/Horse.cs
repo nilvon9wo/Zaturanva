@@ -9,7 +9,7 @@ namespace Zaturanva.Common.Pieces;
 
 public class Horse : IPiece
 {
-	 public Color Color { get; set; }
+	public Color Color { get; set; }
 
 	public required IPlayer Owner { get; set; }
 
@@ -18,8 +18,5 @@ public class Horse : IPiece
 	public required Option<Coordinates> Location { get; set; }
 
 	public bool CanMoveTo(GameState game, Coordinates destination)
-		=> throw new NotImplementedException();
-
-	public Try<GameState> MoveTo(GameState game, Coordinates destination)
 		=> throw new NotImplementedException();
 }
