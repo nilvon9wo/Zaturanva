@@ -16,22 +16,20 @@ public static class PieceUtility
 		=> Guard.Against.Null(game)
 			.Board[destination]
 			.Match(
-				cell => CheckAgainstStandardRules(movingPiece, game, cell),
+				cell => CheckAgainstStandardRules(game, cell),
 				() => false
 			);
 
 	private static bool CheckAgainstStandardRules(
-		IPiece movingPiece,
 		GameState game,
 		Cell cell
 	)
 		=> cell.Piece.Match(
-			targetPiece => IsCaptureAllowed(movingPiece, game, targetPiece),
+			targetPiece => IsCaptureAllowed(game, targetPiece),
 			() => true
 		);
 
 	private static bool IsCaptureAllowed(
-		IPiece movingPiece,
 		GameState game,
 		IPiece targetPiece
 	)

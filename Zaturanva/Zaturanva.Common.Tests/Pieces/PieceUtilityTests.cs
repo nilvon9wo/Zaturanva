@@ -238,6 +238,135 @@ public static class PieceUtilityTests
 		Assert.Equal(expectedResult, result);
 	}
 
+	[Theory]
+	[InlineData(
+		Color.Black,
+		false,
+		false,
+		false
+	)]
+	[InlineData(
+		Color.Black,
+		true,
+		false,
+		false
+	)]
+	[InlineData(
+		Color.Black,
+		false,
+		true,
+		false
+	)]
+	[InlineData(
+		Color.Black,
+		true,
+		true,
+		false
+	)]
+	[InlineData(
+		Color.Blue,
+		false,
+		false,
+		true
+	)]
+	[InlineData(
+		Color.Blue,
+		true,
+		false,
+		true
+	)]
+	[InlineData(
+		Color.Blue,
+		false,
+		true,
+		true
+	)]
+	[InlineData(
+		Color.Blue,
+		true,
+		true,
+		true
+	)]
+	[InlineData(
+		Color.Orange,
+		false,
+		false,
+		true
+	)]
+	[InlineData(
+		Color.Orange,
+		true,
+		false,
+		true
+	)]
+	[InlineData(
+		Color.Orange,
+		false,
+		true,
+		true
+	)]
+	[InlineData(
+		Color.Orange,
+		true,
+		true,
+		true
+	)]
+	[InlineData(
+		Color.White,
+		false,
+		false,
+		false
+	)]
+	[InlineData(
+		Color.White,
+		true,
+		false,
+		false
+	)]
+	[InlineData(
+		Color.White,
+		false,
+		true,
+		false
+	)]
+	[InlineData(
+		Color.White,
+		true,
+		true,
+		true
+	)]
+	public static void
+		IsMoveAllowedByStandardRules_DestinationExistsContainsOwnPiece_ReturnsExpectedResult(
+			Color targetColor,
+			bool allowPlayerSelfCapture,
+			bool allowActiveColorSelfCapture,
+			bool expectedResult
+		)
+	{
+		// Arrange
+		GameState game = SetupGameForNormalMovement(
+			new()
+			{
+				AllowPlayerSelfCapture = allowPlayerSelfCapture,
+				AllowActiveColorSelfCapture = allowActiveColorSelfCapture,
+				AllowAllyCapture = false,
+			},
+			targetColor
+		);
+
+		Boat whiteBoat = (Boat)game.Board["a1"]
+			.ValueUnsafe()
+			.Piece.ValueUnsafe();
+
+		// Act
+
+		bool result
+			= whiteBoat.IsMoveAllowedByStandardRules(game, _targetLocation);
+
+		// Assert
+		Assert.Equal(expectedResult, result);
+	}
+
 	private static GameState SetupGameForNormalMovement(
 		GameOptions gameOptions,
 		Color? targetColor = null
