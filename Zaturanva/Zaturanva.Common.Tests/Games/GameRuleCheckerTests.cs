@@ -1,5 +1,4 @@
 ﻿using LanguageExt;
-using LanguageExt.UnsafeValueAccess;
 
 using Zaturanva.Common.Armies;
 using Zaturanva.Common.ChessBoard;
@@ -8,9 +7,9 @@ using Zaturanva.Common.Contestants.PlayerManagement;
 using Zaturanva.Common.Games;
 using Zaturanva.Common.Pieces;
 
-namespace Zaturanva.Common.Tests.Pieces;
+namespace Zaturanva.Common.Tests.Games;
 
-public static class PieceUtilityTests
+public static class GameRuleCheckerTests
 {
 	private static readonly Coordinates _targetLocation = "c3";
 
@@ -175,10 +174,6 @@ public static class PieceUtilityTests
 
 		game.ActiveColor = activeColor;
 
-		_ = (Boat)game.Board["a1"]
-			.ValueUnsafe()
-			.Piece.ValueUnsafe();
-
 		// Act
 
 		bool result
@@ -214,10 +209,6 @@ public static class PieceUtilityTests
 			},
 			targetColor
 		);
-
-		_ = (Boat)game.Board["a1"]
-			.ValueUnsafe()
-			.Piece.ValueUnsafe();
 
 		// Act
 
@@ -343,10 +334,6 @@ public static class PieceUtilityTests
 			},
 			targetColor
 		);
-
-		_ = (Boat)game.Board["a1"]
-			.ValueUnsafe()
-			.Piece.ValueUnsafe();
 
 		// Act
 

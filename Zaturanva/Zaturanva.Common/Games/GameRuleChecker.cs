@@ -2,11 +2,11 @@
 
 using Zaturanva.Common.ChessBoard;
 using Zaturanva.Common.Colors;
-using Zaturanva.Common.Games;
+using Zaturanva.Common.Pieces;
 
-namespace Zaturanva.Common.Pieces;
+namespace Zaturanva.Common.Games;
 
-public static class PieceUtility
+public static class GameRuleChecker
 {
 	public static bool IsMoveAllowedByStandardRules(
 		this GameState game,
