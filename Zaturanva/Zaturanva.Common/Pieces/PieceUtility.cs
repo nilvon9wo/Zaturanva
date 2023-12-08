@@ -36,12 +36,17 @@ public static class PieceUtility
 		IPiece targetPiece
 	)
 	{
-		Color movingPieceColor = movingPiece.Color;
+		Color activePlayerColor = game.ActiveColor
+								  ?? throw
+									  new
+										  InvalidOperationException(
+											  "Active color required to move pieces."
+										  );
 		Color targetPieceColor = targetPiece.Color;
 		return (game.GameOptions.AllowAllyCapture
-				|| movingPieceColor.IsEnemyOf(targetPieceColor))
-			   && (game.GameOptions.AllowColorSelfCapture
-				   || (targetPieceColor != movingPieceColor))
+				|| activePlayerColor.IsEnemyOf(targetPieceColor))
+			   && (game.GameOptions.AllowActiveColorSelfCapture
+				   || (targetPieceColor != activePlayerColor))
 			   && (game.GameOptions.AllowPlayerSelfCapture
 				   || ActivePlayerDoesNotOwnTarget(targetPiece, game));
 	}

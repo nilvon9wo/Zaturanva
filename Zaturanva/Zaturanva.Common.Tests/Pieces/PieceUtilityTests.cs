@@ -23,7 +23,7 @@ public static class PieceUtilityTests
 			new()
 			{
 				AllowPlayerSelfCapture = false,
-				AllowColorSelfCapture = false,
+				AllowActiveColorSelfCapture = false,
 				AllowAllyCapture = false,
 			}
 		);
@@ -52,7 +52,7 @@ public static class PieceUtilityTests
 			new()
 			{
 				AllowPlayerSelfCapture = false,
-				AllowColorSelfCapture = false,
+				AllowActiveColorSelfCapture = false,
 				AllowAllyCapture = false,
 			}
 		);
@@ -69,16 +69,105 @@ public static class PieceUtilityTests
 	}
 
 	[Theory]
-	[InlineData(Color.Black, false, true)]
-	[InlineData(Color.White, false, false)]
-	[InlineData(Color.Blue, false, true)]
-	[InlineData(Color.Orange, false, true)]
-	[InlineData(Color.Black, true, true)]
-	[InlineData(Color.White, true, true)]
-	[InlineData(Color.Blue, true, true)]
-	[InlineData(Color.Orange, true, true)]
+	[InlineData(
+		Color.White,
+		Color.Black,
+		false,
+		false
+	)]
+	[InlineData(
+		Color.White,
+		Color.Black,
+		true,
+		false
+	)]
+	[InlineData(
+		Color.White,
+		Color.White,
+		true,
+		false
+	)]
+	[InlineData(
+		Color.White,
+		Color.White,
+		false,
+		false
+	)]
+	[InlineData(
+		Color.White,
+		Color.Blue,
+		false,
+		true
+	)]
+	[InlineData(
+		Color.White,
+		Color.Blue,
+		true,
+		true
+	)]
+	[InlineData(
+		Color.White,
+		Color.Orange,
+		false,
+		true
+	)]
+	[InlineData(
+		Color.White,
+		Color.Orange,
+		true,
+		true
+	)]
+	[InlineData(
+		Color.Blue,
+		Color.Black,
+		false,
+		true
+	)]
+	[InlineData(
+		Color.Blue,
+		Color.Black,
+		true,
+		true
+	)]
+	[InlineData(
+		Color.Blue,
+		Color.White,
+		true,
+		true
+	)]
+	[InlineData(
+		Color.Blue,
+		Color.White,
+		false,
+		true
+	)]
+	[InlineData(
+		Color.Blue,
+		Color.Blue,
+		false,
+		false
+	)]
+	[InlineData(
+		Color.Blue,
+		Color.Blue,
+		true,
+		false
+	)]
+	[InlineData(
+		Color.Blue,
+		Color.Orange,
+		false,
+		false
+	)]
+	[InlineData(
+		Color.Blue,
+		Color.Orange,
+		true,
+		false
+	)]
 	public static void
-		IsMoveAllowedByStandardRules_DestinationExistsContainsOwnColor_ReturnsTrue(
+		IsMoveAllowedByStandardRules_DestinationExistsContainsActiveColor_ReturnsExpectedResult(
+			Color activeColor,
 			Color targetColor,
 			bool allowColorSelfCapture,
 			bool expectedResult
@@ -88,13 +177,14 @@ public static class PieceUtilityTests
 		GameState game = SetupGameForNormalMovement(
 			new()
 			{
-				AllowPlayerSelfCapture = true,
-				AllowColorSelfCapture = allowColorSelfCapture,
-				AllowAllyCapture = true,
+				AllowPlayerSelfCapture = false,
+				AllowActiveColorSelfCapture = allowColorSelfCapture,
+				AllowAllyCapture = false,
 			},
 			targetColor
 		);
 
+		game.ActiveColor = activeColor;
 		Boat whiteBoat = (Boat)game.Board["a1"]
 			.ValueUnsafe()
 			.Piece.ValueUnsafe();
@@ -110,17 +200,17 @@ public static class PieceUtilityTests
 
 	[Theory]
 	[InlineData(Color.Black, false, false)]
-	[InlineData(Color.White, false, false)]
-	[InlineData(Color.Blue, false, true)]
-	[InlineData(Color.Orange, false, true)]
 	[InlineData(Color.Black, true, true)]
+	[InlineData(Color.White, false, false)]
 	[InlineData(Color.White, true, false)]
+	[InlineData(Color.Blue, false, true)]
 	[InlineData(Color.Blue, true, true)]
+	[InlineData(Color.Orange, false, true)]
 	[InlineData(Color.Orange, true, true)]
 	public static void
-		IsMoveAllowedByStandardRules_DestinationExistsContainsAlly_ReturnsTrue(
+		IsMoveAllowedByStandardRules_DestinationExistsContainsAlly_ReturnsExpectedResult(
 			Color targetColor,
-			bool allowAllyCapture,
+			bool allowAllySelfCapture,
 			bool expectedResult
 		)
 	{
@@ -128,9 +218,9 @@ public static class PieceUtilityTests
 		GameState game = SetupGameForNormalMovement(
 			new()
 			{
-				AllowPlayerSelfCapture = true,
-				AllowColorSelfCapture = false,
-				AllowAllyCapture = allowAllyCapture,
+				AllowPlayerSelfCapture = false,
+				AllowActiveColorSelfCapture = false,
+				AllowAllyCapture = allowAllySelfCapture,
 			},
 			targetColor
 		);
@@ -196,6 +286,7 @@ public static class PieceUtilityTests
 		return new GameState()
 		{
 			Players = players,
+			ActiveColor = Color.White,
 			GameOptions = gameOptions,
 			Board = Board.From(allPieces),
 		}
