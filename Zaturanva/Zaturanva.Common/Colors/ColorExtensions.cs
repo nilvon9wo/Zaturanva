@@ -28,5 +28,5 @@ internal static class ColorExtensions
 				   && _vivids.Contains(otherColor)));
 
 	public static bool IsEnemy(this Color thisColor, Color otherColor)
-		=> (thisColor == otherColor) && !thisColor.IsAlly(otherColor);
+		=> (thisColor != otherColor) && !thisColor.IsAlly(otherColor);
 }

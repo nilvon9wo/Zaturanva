@@ -24,7 +24,10 @@ public class Boat : IPiece
 		=> Location.Match(
 			currentLocation
 				=> IsMovementAllowed(currentLocation, destination)
-				   && IsDestinationAllowed(game, destination),
+				   && this.ConformsWithStandardDestinationRules(
+					   game,
+					   destination
+				   ),
 			() => false
 		);
 
@@ -38,29 +41,4 @@ public class Boat : IPiece
 		return (xDifference == 2)
 			   && (yDifference == 2);
 	}
-
-	private bool IsDestinationAllowed(
-		GameState game,
-		Coordinates destination
-	)
-		=> game.Board[destination]
-			.Match(
-				cell => cell.Piece.Match(
-					piece =>
-					{
-						Color pieceColor = piece.Color;
-						return (pieceColor != Color)
-							   || ((pieceColor == Color)
-								   && game.GameOptions.AllowColorSelfCapture)
-							   || Color.IsEnemy(pieceColor)
-							   || (Color.IsAlly(pieceColor)
-								   && game.GameOptions.AllowAllyCapture)
-							   || (Owner != piece.Owner)
-							   || ((Owner == piece.Owner)
-								   && game.GameOptions.AllowPlayerSelfCapture);
-					},
-					() => true
-				),
-				() => false
-			);
 }
