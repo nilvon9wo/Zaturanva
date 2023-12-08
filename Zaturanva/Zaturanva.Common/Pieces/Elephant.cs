@@ -18,5 +18,51 @@ public class Elephant : IPiece
 	public required Option<Coordinates> Location { get; set; }
 
 	public bool CanMoveTo(GameState game, Coordinates destination)
-		=> throw new NotImplementedException();
+		=> Location.Match(
+			currentLocation
+				=> IsMovementAllowed(game.Board, currentLocation, destination)
+				   && game.IsMoveAllowedByStandardRules(destination),
+			() => false
+		);
+
+	private static bool IsMovementAllowed(
+		Board board,
+		Coordinates currentLocation,
+		Coordinates destination
+	)
+	{
+		int xDifference = Math.Abs(destination.X - currentLocation.X);
+		int yDifference = Math.Abs(destination.Y - currentLocation.Y);
+
+		if (IsOrthogonal(xDifference, yDifference))
+		{
+			IEnumerable<Coordinates> intermediateCells = Enumerable.Range(
+					1,
+					Math.Max(xDifference, yDifference) - 1
+				)
+				.Select(
+					i => new Coordinates(
+						currentLocation.X
+						+ (xDifference > 0
+							? i * Math.Sign(destination.X - currentLocation.X)
+							: 0),
+						currentLocation.Y
+						+ (yDifference > 0
+							? i * Math.Sign(destination.Y - currentLocation.Y)
+							: 0)
+					)
+				);
+
+			return intermediateCells.All(cell => board[cell].IsNone);
+		}
+
+		return false;
+	}
+
+	private static bool IsOrthogonal(int xDifference, int yDifference)
+	{
+		bool isHorizontal = (xDifference > 0) && (yDifference == 0);
+		bool isVertical = (xDifference == 0) && (yDifference > 0);
+		return isHorizontal || isVertical;
+	}
 }
