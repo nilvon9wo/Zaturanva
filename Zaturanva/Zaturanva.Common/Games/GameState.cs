@@ -11,6 +11,7 @@ namespace Zaturanva.Common.Games;
 public class GameState
 {
 	public required Players Players { get; init; }
+	public GameOptions GameOptions { get; init; } = new();
 
 	public Color? FocusColor { get; set; }
 

@@ -22,14 +22,45 @@ public class Boat : IPiece
 
 	public bool CanMoveTo(GameState game, Coordinates destination)
 		=> Location.Match(
-			currentLocation =>
-			{
-				int xDifference = Math.Abs(destination.X - currentLocation.X);
-				int yDifference = Math.Abs(destination.Y - currentLocation.Y);
-				return (xDifference == 2)
-					   && (yDifference == 2)
-					   && game.Board[destination].IsSome;
-			},
+			currentLocation
+				=> IsMovementAllowed(currentLocation, destination)
+				   && IsDestinationAllowed(game, destination),
 			() => false
 		);
+
+	private static bool IsMovementAllowed(
+		Coordinates currentLocation,
+		Coordinates destination
+	)
+	{
+		int xDifference = Math.Abs(destination.X - currentLocation.X);
+		int yDifference = Math.Abs(destination.Y - currentLocation.Y);
+		return (xDifference == 2)
+			   && (yDifference == 2);
+	}
+
+	private bool IsDestinationAllowed(
+		GameState game,
+		Coordinates destination
+	)
+		=> game.Board[destination]
+			.Match(
+				cell => cell.Piece.Match(
+					piece =>
+					{
+						Color pieceColor = piece.Color;
+						return (pieceColor != Color)
+							   || ((pieceColor == Color)
+								   && game.GameOptions.AllowColorSelfCapture)
+							   || Color.IsEnemy(pieceColor)
+							   || (Color.IsAlly(pieceColor)
+								   && game.GameOptions.AllowAllyCapture)
+							   || (Owner != piece.Owner)
+							   || ((Owner == piece.Owner)
+								   && game.GameOptions.AllowPlayerSelfCapture);
+					},
+					() => true
+				),
+				() => false
+			);
 }
