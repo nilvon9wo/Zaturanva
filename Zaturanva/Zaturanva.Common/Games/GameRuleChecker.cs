@@ -41,7 +41,8 @@ public static class GameRuleChecker
 										  );
 		Color targetPieceColor = targetPiece.Color;
 		return (game.GameOptions.AllowAllyCapture
-				|| activePlayerColor.IsEnemyOf(targetPieceColor))
+				|| activePlayerColor.IsEnemyOf(targetPieceColor)
+				|| (targetPieceColor == activePlayerColor))
 			   && (game.GameOptions.AllowActiveColorSelfCapture
 				   || (targetPieceColor != activePlayerColor))
 			   && (game.GameOptions.AllowPlayerSelfCapture
