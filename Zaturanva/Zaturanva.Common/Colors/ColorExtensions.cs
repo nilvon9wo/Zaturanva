@@ -19,14 +19,8 @@ internal static class ColorExtensions
 	public static int GetRotation(this Color color)
 		=> _rotationAnglesByColor[color];
 
-	// ReSharper disable once MemberCanBePrivate.Global
-	public static bool IsAlly(this Color thisColor, Color otherColor)
-		=> (thisColor != otherColor)
-		   && ((_achromatics.Contains(thisColor)
-				&& _achromatics.Contains(otherColor))
-			   || (_vivids.Contains(thisColor)
-				   && _vivids.Contains(otherColor)));
-
-	public static bool IsEnemy(this Color thisColor, Color otherColor)
-		=> (thisColor != otherColor) && !thisColor.IsAlly(otherColor);
+	public static bool IsEnemyOf(this Color thisColor, Color otherColor)
+		=> (_achromatics.Contains(thisColor) && _vivids.Contains(otherColor))
+		   || (_vivids.Contains(thisColor)
+			   && _achromatics.Contains(otherColor));
 }

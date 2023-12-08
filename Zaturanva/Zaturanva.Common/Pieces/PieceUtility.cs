@@ -1,18 +1,20 @@
-﻿using Zaturanva.Common.ChessBoard;
+﻿using Ardalis.GuardClauses;
+
+using Zaturanva.Common.ChessBoard;
 using Zaturanva.Common.Colors;
-using Zaturanva.Common.Contestants.PlayerManagement;
 using Zaturanva.Common.Games;
 
 namespace Zaturanva.Common.Pieces;
 
-internal static class PieceUtility
+public static class PieceUtility
 {
-	internal static bool IsMoveAllowedByStandardRules(
+	public static bool IsMoveAllowedByStandardRules(
 		this IPiece movingPiece,
 		GameState game,
 		Coordinates destination
 	)
-		=> game.Board[destination]
+		=> Guard.Against.Null(game)
+			.Board[destination]
 			.Match(
 				cell => CheckAgainstStandardRules(movingPiece, game, cell),
 				() => false
@@ -35,32 +37,26 @@ internal static class PieceUtility
 	)
 	{
 		Color movingPieceColor = movingPiece.Color;
+		Color targetPieceColor = targetPiece.Color;
+		return (game.GameOptions.AllowAllyCapture
+				|| movingPieceColor.IsEnemyOf(targetPieceColor))
+			   && (game.GameOptions.AllowColorSelfCapture
+				   || (targetPieceColor != movingPieceColor))
+			   && (game.GameOptions.AllowPlayerSelfCapture
+				   || ActivePlayerDoesNotOwnTarget(targetPiece, game));
+	}
+
+	private static bool ActivePlayerDoesNotOwnTarget(
+		IPiece targetPiece,
+		GameState game
+	)
+	{
 		Color activePlayerColor = game.ActiveColor
 								  ?? throw
 									  new
 										  InvalidOperationException(
 											  "Active color required to move pieces."
 										  );
-
-		Color targetPieceColor = targetPiece.Color;
-
-		bool isEnemy = movingPieceColor.IsEnemy(targetPieceColor);
-
-		bool activePlayerIsAlly = activePlayerColor.IsAlly(targetPieceColor);
-		bool isAllyCaptureAllowed
-			= activePlayerIsAlly && game.GameOptions.AllowAllyCapture;
-
-		bool isSameColor = targetPieceColor == movingPieceColor;
-		bool isDifferentColor = !isSameColor;
-		bool isSameColorCaptureAllowed
-			= isSameColor && game.GameOptions.AllowColorSelfCapture;
-
-		IPlayer activePlayer = game.Players[activePlayerColor];
-		bool moverDoesNotOwnTarget = activePlayer != targetPiece.Owner;
-
-		return (isEnemy || isAllyCaptureAllowed)
-			   && (isDifferentColor || isSameColorCaptureAllowed)
-			   && (moverDoesNotOwnTarget
-				   || game.GameOptions.AllowPlayerSelfCapture);
+		return game.Players[activePlayerColor] != targetPiece.Owner;
 	}
 }

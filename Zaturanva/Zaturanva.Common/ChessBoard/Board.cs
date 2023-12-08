@@ -8,8 +8,6 @@ using System.Diagnostics.CodeAnalysis;
 using Zaturanva.Common.Colors;
 using Zaturanva.Common.Pieces;
 
-using static LanguageExt.Prelude;
-
 namespace Zaturanva.Common.ChessBoard;
 
 public record Board
@@ -126,13 +124,12 @@ public record Board
 			);
 
 	public Coordinates GetThroneLocation(Color pieceColor)
-		=> _thronesByColor![pieceColor];
+		=> _thronesByColor[pieceColor];
 
 	// ReSharper disable once MemberCanBePrivate.Global
 	public IEnumerable<Cell> GetAllCells()
 		=> _cellByCoordinates.Values.ToList();
 
-	// ReSharper disable once MemberCanBePrivate.Global
 	public IEnumerable<IPiece> GetAllPieces()
 		=> GetAllCells()
 			.Where(cell => cell.Piece.IsSome)
