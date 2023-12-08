@@ -9,8 +9,7 @@ namespace Zaturanva.Common.Pieces;
 public static class PieceUtility
 {
 	public static bool IsMoveAllowedByStandardRules(
-		this IPiece movingPiece,
-		GameState game,
+		this GameState game,
 		Coordinates destination
 	)
 		=> Guard.Against.Null(game)

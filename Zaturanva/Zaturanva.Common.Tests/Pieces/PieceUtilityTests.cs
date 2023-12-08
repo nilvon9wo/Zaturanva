@@ -28,16 +28,9 @@ public static class PieceUtilityTests
 			}
 		);
 
-		Boat boat = (Boat)game.Board["a1"]
-			.ValueUnsafe()
-			.Piece.ValueUnsafe();
-
 		// Act
 		bool result
-			= boat.IsMoveAllowedByStandardRules(
-				game,
-				new(10, 10)
-			);
+			= game.IsMoveAllowedByStandardRules(new(10, 10));
 
 		// Assert
 		Assert.False(result);
@@ -57,12 +50,8 @@ public static class PieceUtilityTests
 			}
 		);
 
-		Boat boat = (Boat)game.Board["a1"]
-			.ValueUnsafe()
-			.Piece.ValueUnsafe();
-
 		// Act
-		bool result = boat.IsMoveAllowedByStandardRules(game, _targetLocation);
+		bool result = game.IsMoveAllowedByStandardRules(_targetLocation);
 
 		// Assert
 		Assert.True(result);
@@ -185,14 +174,15 @@ public static class PieceUtilityTests
 		);
 
 		game.ActiveColor = activeColor;
-		Boat whiteBoat = (Boat)game.Board["a1"]
+
+		_ = (Boat)game.Board["a1"]
 			.ValueUnsafe()
 			.Piece.ValueUnsafe();
 
 		// Act
 
 		bool result
-			= whiteBoat.IsMoveAllowedByStandardRules(game, _targetLocation);
+			= game.IsMoveAllowedByStandardRules(_targetLocation);
 
 		// Assert
 		Assert.Equal(expectedResult, result);
@@ -225,14 +215,14 @@ public static class PieceUtilityTests
 			targetColor
 		);
 
-		Boat whiteBoat = (Boat)game.Board["a1"]
+		_ = (Boat)game.Board["a1"]
 			.ValueUnsafe()
 			.Piece.ValueUnsafe();
 
 		// Act
 
 		bool result
-			= whiteBoat.IsMoveAllowedByStandardRules(game, _targetLocation);
+			= game.IsMoveAllowedByStandardRules(_targetLocation);
 
 		// Assert
 		Assert.Equal(expectedResult, result);
@@ -354,14 +344,14 @@ public static class PieceUtilityTests
 			targetColor
 		);
 
-		Boat whiteBoat = (Boat)game.Board["a1"]
+		_ = (Boat)game.Board["a1"]
 			.ValueUnsafe()
 			.Piece.ValueUnsafe();
 
 		// Act
 
 		bool result
-			= whiteBoat.IsMoveAllowedByStandardRules(game, _targetLocation);
+			= game.IsMoveAllowedByStandardRules(_targetLocation);
 
 		// Assert
 		Assert.Equal(expectedResult, result);
