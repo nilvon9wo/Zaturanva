@@ -95,65 +95,59 @@ public static class GameStateHandler
 		IPiece movingPiece,
 		Coordinates destination
 	)
-		=> Try(
-			() => !CanMoveTo(game, movingPiece, destination)
-				? throw new ArgumentException(
-					$"Cannot move {movingPiece} to {destination}.",
-					nameof(movingPiece)
+		=> !CanMoveTo(game, movingPiece, destination)
+			? throw new ArgumentException(
+				$"Cannot move {movingPiece} to {destination}.",
+				nameof(movingPiece)
+			)
+			: Guard.Against.Null(game)
+				.Board[destination]
+				.Match(
+					cell => cell.Piece,
+					() => throw new ArgumentException(
+						$"No cell found at {destination}.",
+						nameof(destination)
+					)
 				)
-				: game.Board[destination]
-					.Match(
-						cell => cell.Piece,
-						() => throw new ArgumentException(
-							$"No cell found at {destination}.",
-							nameof(destination)
-						)
-					)
-					.Match(
-						destinationPiece
-							=> MoveWithCapture(
-								game,
-								movingPiece,
-								destinationPiece
-							),
-						() => MoveWithoutCapture(game, movingPiece, destination)
-					)
-		);
+				.Match(
+					destinationPiece
+						=> MoveWithCapture(
+							game,
+							movingPiece,
+							destinationPiece
+						),
+					() => MoveWithoutCapture(game, movingPiece, destination)
+				);
 
-	private static GameState MoveWithCapture(
+	private static Try<GameState> MoveWithCapture(
 		GameState game,
 		IPiece movingPiece,
 		IPiece destinationPiece
 	)
-	{
-		// TODO: Check success
-		_ = destinationPiece.Location.Match(
+		=> destinationPiece.Location.Match(
 			destination =>
 			{
 				destinationPiece.CapturedBy
 					= Option<Color>.Some(movingPiece.Color);
 				destinationPiece.Location = Option<Coordinates>.None;
-				_ = game.Board.Remove(destinationPiece);
-				_ = game.Board.Move(movingPiece, destination);
+
+				return game.Board.Remove(destinationPiece)
+					.Bind(_ => game.Board.Move(movingPiece, destination))
+					.Map(_ => game);
 			},
-			() =>
-				throw new ArgumentException(
+			() => Try<GameState>(
+				new ArgumentException(
 					"Destination Piece is missing location",
 					nameof(destinationPiece)
 				)
+			)
 		);
 
-		return game;
-	}
-
-	private static GameState MoveWithoutCapture(
+	private static Try<GameState> MoveWithoutCapture(
 		GameState game,
 		IPiece movingPiece,
 		Coordinates destination
 	)
-	{
-		// TODO: Check success
-		_ = game.Board.Move(movingPiece, destination);
-		return game;
-	}
+		=> game.Board.Move(movingPiece, destination)
+			.Map(_ => game);
 }
