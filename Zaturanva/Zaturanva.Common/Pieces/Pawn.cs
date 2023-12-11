@@ -25,22 +25,62 @@ public class Pawn : IPiece
 			() => false
 		);
 
-	private static bool IsMovementAllowed(
+	private bool IsMovementAllowed(
+		Board board,
+		Coordinates currentLocation,
+		Coordinates destination
+	)
+		=> IsOneStepForward(board, currentLocation, destination)
+		   || IsDiagonalCapture(board, currentLocation, destination);
+
+	private bool IsOneStepForward(
 		Board board,
 		Coordinates currentLocation,
 		Coordinates destination
 	)
 	{
-		int xDifference = Math.Abs(destination.X - currentLocation.X);
+		int xDifference = destination.X - currentLocation.X;
 		int yDifference = destination.Y - currentLocation.Y;
-		bool isOneStepForward = (xDifference == 0)
-								&& (yDifference == 1)
-								&& board[destination]
-									.IsVacant();
-		bool isDiagonalCapture = (xDifference == 1)
-								 && (yDifference == 1)
-								 && board[destination]
-									 .IsOccupied();
-		return isOneStepForward || isDiagonalCapture;
+		int stepSize = GetStepSize(currentLocation, destination);
+		return (stepSize == 1)
+			   && ((Color is Color.White or Color.Black
+					&& (xDifference == 0))
+				   || (Color is Color.Blue or Color.Orange
+					   && (yDifference == 0)))
+			   && board[destination]
+				   .IsVacant();
+	}
+
+	private bool IsDiagonalCapture(
+		Board board,
+		Coordinates currentLocation,
+		Coordinates destination
+	)
+	{
+		int xDifference = destination.X - currentLocation.X;
+		int yDifference = destination.Y - currentLocation.Y;
+		int stepSize = GetStepSize(currentLocation, destination);
+		return (Math.Abs(xDifference) == 1)
+			   && (Math.Abs(yDifference) == 1)
+			   && (stepSize == 1)
+			   && board[destination]
+				   .IsOccupied();
+	}
+
+	private int GetStepSize(
+		Coordinates currentLocation,
+		Coordinates destination
+	)
+	{
+		int xDifference = destination.X - currentLocation.X;
+		int yDifference = destination.Y - currentLocation.Y;
+		return Color switch
+		{
+			Color.White => yDifference,
+			Color.Black => -yDifference,
+			Color.Blue => xDifference,
+			Color.Orange => -xDifference,
+			_ => throw new ArgumentException("Invalid color"),
+		};
 	}
 }
