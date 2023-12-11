@@ -10,29 +10,39 @@ public static class GameRuleChecker
 {
 	public static bool IsMoveAllowedByStandardRules(
 		this GameState game,
+		IPiece movingPiece,
 		Coordinates destination
 	)
 		=> Guard.Against.Null(game)
-			.Board[destination]
-			.Match(
-				cell => CheckAgainstStandardRules(game, cell),
-				() => false
-			);
+			   .Board[destination]
+			   .Match(
+				   cell => CheckAgainstStandardRules(game, movingPiece, cell),
+				   () => false
+			   )
+		   && Guard.Against.Null(movingPiece)
+			   .Location
+			   .Match(
+				   location => location != destination,
+				   () => false
+			   );
 
 	private static bool CheckAgainstStandardRules(
 		GameState game,
+		IPiece movingPiece,
 		Cell cell
 	)
 		=> cell.Piece.Match(
-			targetPiece => IsCaptureAllowed(game, targetPiece),
+			targetPiece => IsCaptureAllowed(game, movingPiece, targetPiece),
 			() => true
 		);
 
 	private static bool IsCaptureAllowed(
 		GameState game,
+		IPiece movingPiece,
 		IPiece targetPiece
 	)
 	{
+		Color movingPieceColor = movingPiece.Color;
 		Color activePlayerColor = game.ActiveColor
 								  ?? throw
 									  new
@@ -40,9 +50,11 @@ public static class GameRuleChecker
 											  "Active color required to move pieces."
 										  );
 		Color targetPieceColor = targetPiece.Color;
-		return (game.GameOptions.AllowAllyCapture
-				|| activePlayerColor.IsEnemyOf(targetPieceColor)
-				|| (targetPieceColor == activePlayerColor))
+		return (game.GameOptions.AllowMovingColorSelfCapture
+				|| (targetPieceColor != movingPieceColor))
+			   && (game.GameOptions.AllowAllyCapture
+				   || activePlayerColor.IsEnemyOf(targetPieceColor)
+				   || (targetPieceColor == activePlayerColor))
 			   && (game.GameOptions.AllowActiveColorSelfCapture
 				   || (targetPieceColor != activePlayerColor))
 			   && (game.GameOptions.AllowPlayerSelfCapture

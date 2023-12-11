@@ -21,7 +21,7 @@ public class Elephant : IPiece
 		=> Location.Match(
 			currentLocation
 				=> IsMovementAllowed(game.Board, currentLocation, destination)
-				   && game.IsMoveAllowedByStandardRules(destination),
+				   && game.IsMoveAllowedByStandardRules(this, destination),
 			() => false
 		);
 

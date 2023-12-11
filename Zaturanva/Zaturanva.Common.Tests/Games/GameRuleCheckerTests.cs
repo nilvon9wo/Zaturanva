@@ -1,4 +1,5 @@
 ﻿using LanguageExt;
+using LanguageExt.UnsafeValueAccess;
 
 using Zaturanva.Common.Armies;
 using Zaturanva.Common.ChessBoard;
@@ -26,10 +27,13 @@ public static class GameRuleCheckerTests
 				AllowAllyCapture = false,
 			}
 		);
+		IPiece piece = game.Board["a1"]
+			.ValueUnsafe()
+			.Piece.ValueUnsafe();
 
 		// Act
 		bool result
-			= game.IsMoveAllowedByStandardRules(new(10, 10));
+			= game.IsMoveAllowedByStandardRules(piece, new(10, 10));
 
 		// Assert
 		Assert.False(result);
@@ -48,9 +52,12 @@ public static class GameRuleCheckerTests
 				AllowAllyCapture = false,
 			}
 		);
+		IPiece piece = game.Board["a1"]
+			.ValueUnsafe()
+			.Piece.ValueUnsafe();
 
 		// Act
-		bool result = game.IsMoveAllowedByStandardRules(_targetLocation);
+		bool result = game.IsMoveAllowedByStandardRules(piece, _targetLocation);
 
 		// Assert
 		Assert.True(result);
@@ -167,17 +174,20 @@ public static class GameRuleCheckerTests
 			{
 				AllowPlayerSelfCapture = false,
 				AllowActiveColorSelfCapture = allowColorSelfCapture,
+				AllowMovingColorSelfCapture = true,
 				AllowAllyCapture = false,
 			},
 			targetColor
 		);
-
 		game.ActiveColor = activeColor;
+		IPiece piece = game.Board["a1"]
+			.ValueUnsafe()
+			.Piece.ValueUnsafe();
 
 		// Act
 
 		bool result
-			= game.IsMoveAllowedByStandardRules(_targetLocation);
+			= game.IsMoveAllowedByStandardRules(piece, _targetLocation);
 
 		// Assert
 		Assert.Equal(expectedResult, result);
@@ -209,11 +219,14 @@ public static class GameRuleCheckerTests
 			},
 			targetColor
 		);
+		IPiece piece = game.Board["a1"]
+			.ValueUnsafe()
+			.Piece.ValueUnsafe();
 
 		// Act
 
 		bool result
-			= game.IsMoveAllowedByStandardRules(_targetLocation);
+			= game.IsMoveAllowedByStandardRules(piece, _targetLocation);
 
 		// Assert
 		Assert.Equal(expectedResult, result);
@@ -330,15 +343,19 @@ public static class GameRuleCheckerTests
 			{
 				AllowPlayerSelfCapture = allowPlayerSelfCapture,
 				AllowActiveColorSelfCapture = allowActiveColorSelfCapture,
+				AllowMovingColorSelfCapture = true,
 				AllowAllyCapture = false,
 			},
 			targetColor
 		);
+		IPiece piece = game.Board["a1"]
+			.ValueUnsafe()
+			.Piece.ValueUnsafe();
 
 		// Act
 
 		bool result
-			= game.IsMoveAllowedByStandardRules(_targetLocation);
+			= game.IsMoveAllowedByStandardRules(piece, _targetLocation);
 
 		// Assert
 		Assert.Equal(expectedResult, result);

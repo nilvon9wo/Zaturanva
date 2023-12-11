@@ -24,7 +24,7 @@ public class Boat : IPiece
 		=> Location.Match(
 			currentLocation
 				=> IsMovementAllowed(currentLocation, destination)
-				   && game.IsMoveAllowedByStandardRules(destination),
+				   && game.IsMoveAllowedByStandardRules(this, destination),
 			() => false
 		);
 
