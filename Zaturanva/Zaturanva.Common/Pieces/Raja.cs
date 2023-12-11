@@ -18,5 +18,20 @@ public class Raja : IPiece
 	public required Option<Coordinates> Location { get; set; }
 
 	public bool CanMoveTo(GameState game, Coordinates destination)
-		=> throw new NotImplementedException();
+		=> Location.Match(
+			currentLocation
+				=> IsMovementAllowed(currentLocation, destination)
+				   && game.IsMoveAllowedByStandardRules(this, destination),
+			() => false
+		);
+
+	private static bool IsMovementAllowed(
+		Coordinates currentLocation,
+		Coordinates destination
+	)
+	{
+		int xDifference = Math.Abs(destination.X - currentLocation.X);
+		int yDifference = Math.Abs(destination.Y - currentLocation.Y);
+		return (xDifference <= 1) && (yDifference <= 1);
+	}
 }
