@@ -34,29 +34,53 @@ public class Elephant : IPiece
 		int xDifference = Math.Abs(destination.X - currentLocation.X);
 		int yDifference = Math.Abs(destination.Y - currentLocation.Y);
 
-		if (IsOrthogonal(xDifference, yDifference))
-		{
-			IEnumerable<Coordinates> intermediateCells = Enumerable.Range(
-					1,
-					Math.Max(xDifference, yDifference) - 1
+		bool isOrthogonal = IsOrthogonal(xDifference, yDifference);
+		IEnumerable<int> range = Enumerable.Range(
+			1,
+			Math.Max(xDifference, yDifference) - 1
+		);
+		IEnumerable<Coordinates> inBetweenCells = range
+			.Select(
+				i => new Coordinates(
+					CalculateX(currentLocation, destination, i),
+					CalculateY(currentLocation, destination, i)
 				)
-				.Select(
-					i => new Coordinates(
-						currentLocation.X
-						+ (xDifference > 0
-							? i * Math.Sign(destination.X - currentLocation.X)
-							: 0),
-						currentLocation.Y
-						+ (yDifference > 0
-							? i * Math.Sign(destination.Y - currentLocation.Y)
-							: 0)
-					)
-				);
+			);
+		bool areAllEmpty = inBetweenCells
+			.All(
+				cell => board[cell]
+					.IsVacant()
+			);
+		return isOrthogonal
+			   && areAllEmpty;
+	}
 
-			return intermediateCells.All(cell => board[cell].IsNone);
-		}
+	private static int CalculateX(
+		Coordinates currentLocation,
+		Coordinates destination,
+		int i
+	)
+	{
+		int currentX = currentLocation.X;
+		int result = destination.X - currentX;
+		return currentX
+			   + (Math.Abs(result) > 0
+				   ? i * Math.Sign(result)
+				   : 0);
+	}
 
-		return false;
+	private static int CalculateY(
+		Coordinates currentLocation,
+		Coordinates destination,
+		int i
+	)
+	{
+		int currentY = currentLocation.Y;
+		int result = destination.Y - currentY;
+		return currentY
+			   + (Math.Abs(result) > 0
+				   ? i * Math.Sign(result)
+				   : 0);
 	}
 
 	private static bool IsOrthogonal(int xDifference, int yDifference)
