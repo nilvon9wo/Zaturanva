@@ -4,7 +4,7 @@ namespace Zaturanva.Common.ChessBoard;
 
 internal static class OptionCellExtensions
 {
-	private static bool IsOccupied(this Option<Cell> cellOption)
+	public static bool IsOccupied(this Option<Cell> cellOption)
 		=> cellOption.Match(
 			cell => cell.Piece.IsSome,
 			false

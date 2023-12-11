@@ -15,7 +15,7 @@ public class ElephantTests
 	{
 		// Arrange
 		IPlayer player = new Player().Assign(Color.White);
-		Elephant elephant = CreateBoatAt(player, "a1");
+		Elephant elephant = CreateElephantAt(player, "a1");
 		GameState game = CreateGameFor(elephant);
 
 		// Act
@@ -30,7 +30,7 @@ public class ElephantTests
 	{
 		// Arrange
 		IPlayer player = new Player().Assign(Color.White);
-		Elephant elephant = CreateBoatAt(player, "a1");
+		Elephant elephant = CreateElephantAt(player, "a1");
 		GameState game = CreateGameFor(elephant);
 
 		// Act
@@ -45,7 +45,7 @@ public class ElephantTests
 	{
 		// Arrange
 		IPlayer player = new Player().Assign(Color.White);
-		Elephant elephant = CreateBoatAt(player, "a1");
+		Elephant elephant = CreateElephantAt(player, "a1");
 		GameState game = CreateGameFor(elephant);
 
 		// Act
@@ -60,7 +60,7 @@ public class ElephantTests
 	{
 		// Arrange
 		IPlayer player = new Player().Assign(Color.White);
-		Elephant elephant = CreateBoatAt(player, "a1");
+		Elephant elephant = CreateElephantAt(player, "a1");
 		GameState game = CreateGameFor(elephant);
 
 		// Act
@@ -75,7 +75,7 @@ public class ElephantTests
 	{
 		// Arrange
 		IPlayer player = new Player().Assign(Color.White);
-		Elephant elephant = CreateBoatAt(player, "a1");
+		Elephant elephant = CreateElephantAt(player, "a1");
 		GameState game = CreateGameFor(elephant);
 
 		// Act
@@ -90,8 +90,8 @@ public class ElephantTests
 	{
 		// Arrange
 		IPlayer player = new Player().Assign(Color.White);
-		Elephant elephant1 = CreateBoatAt(player, "a1");
-		Elephant elephant2 = CreateBoatAt(player, "b1");
+		Elephant elephant1 = CreateElephantAt(player, "a1");
+		Elephant elephant2 = CreateElephantAt(player, "b1");
 		GameState game = CreateGameFor(
 			new List<IPiece> { elephant1, elephant2 }
 		);
@@ -108,8 +108,8 @@ public class ElephantTests
 	{
 		// Arrange
 		IPlayer player = new Player().Assign(Color.White);
-		Elephant elephant1 = CreateBoatAt(player, "a1");
-		Elephant elephant2 = CreateBoatAt(player, "a2");
+		Elephant elephant1 = CreateElephantAt(player, "a1");
+		Elephant elephant2 = CreateElephantAt(player, "a2");
 		GameState game = CreateGameFor(
 			new List<IPiece> { elephant1, elephant2 }
 		);
@@ -126,8 +126,8 @@ public class ElephantTests
 	{
 		// Arrange
 		IPlayer player = new Player().Assign(Color.White);
-		Elephant elephant1 = CreateBoatAt(player, "a1");
-		Elephant elephant2 = CreateBoatAt(player, "c1");
+		Elephant elephant1 = CreateElephantAt(player, "a1");
+		Elephant elephant2 = CreateElephantAt(player, "c1");
 		GameState game = CreateGameFor(
 			new List<IPiece> { elephant1, elephant2 }
 		);
@@ -144,8 +144,8 @@ public class ElephantTests
 	{
 		// Arrange
 		IPlayer player = new Player().Assign(Color.White);
-		Elephant elephant1 = CreateBoatAt(player, "a1");
-		Elephant elephant2 = CreateBoatAt(player, "a3");
+		Elephant elephant1 = CreateElephantAt(player, "a1");
+		Elephant elephant2 = CreateElephantAt(player, "a3");
 		GameState game = CreateGameFor(
 			new List<IPiece> { elephant1, elephant2 }
 		);
@@ -163,8 +163,8 @@ public class ElephantTests
 		// Arrange
 		IPlayer whitePlayer = new Player().Assign(Color.White);
 		IPlayer bluePlayer = new Player().Assign(Color.Blue);
-		Elephant elephant1 = CreateBoatAt(whitePlayer, "a1");
-		Elephant elephant2 = CreateBoatAt(bluePlayer, "c1", Color.Blue);
+		Elephant elephant1 = CreateElephantAt(whitePlayer, "a1");
+		Elephant elephant2 = CreateElephantAt(bluePlayer, "c1", Color.Blue);
 		GameState game = CreateGameFor(
 			new List<IPiece> { elephant1, elephant2 }
 		);
@@ -182,8 +182,8 @@ public class ElephantTests
 		// Arrange
 		IPlayer whitePlayer = new Player().Assign(Color.White);
 		IPlayer bluePlayer = new Player().Assign(Color.Blue);
-		Elephant elephant1 = CreateBoatAt(whitePlayer, "a1");
-		Elephant elephant2 = CreateBoatAt(bluePlayer, "c1", Color.Blue);
+		Elephant elephant1 = CreateElephantAt(whitePlayer, "a1");
+		Elephant elephant2 = CreateElephantAt(bluePlayer, "c1", Color.Blue);
 		GameState game = CreateGameFor(
 			new List<IPiece> { elephant1, elephant2 }
 		);
@@ -195,7 +195,7 @@ public class ElephantTests
 		Assert.True(result);
 	}
 
-	private static Elephant CreateBoatAt(
+	private static Elephant CreateElephantAt(
 		IPlayer player,
 		string initialPosition,
 		Color color = Color.White
