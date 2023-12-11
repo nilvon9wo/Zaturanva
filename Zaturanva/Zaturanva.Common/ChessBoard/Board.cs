@@ -139,4 +139,53 @@ public record Board
 	public IEnumerable<IPiece> GetPieces(Color color)
 		=> GetAllPieces()
 			.Where(piece => piece.Color == color);
+
+	internal Board Move(IPiece movingPiece, Coordinates destination)
+	{
+		_ = movingPiece.Location.Match(
+			location => _cellByCoordinates[location] = new(
+				location,
+				Option<IPiece>.None
+			),
+			() => throw new ArgumentException(
+				"Piece is not on board.",
+				nameof(movingPiece)
+			)
+		);
+
+		_ = _cellByCoordinates.TryGetValue(
+			destination,
+			out Cell destinationCell
+		)
+			? destinationCell.Piece.Match(
+				_ => throw new ArgumentException(
+					$"Can't move to occupied cell at {destination}.",
+					nameof(destination)
+				),
+				() => _cellByCoordinates[destination] = new(
+					destination,
+					Option<IPiece>.Some(movingPiece)
+				)
+			)
+			: throw new ArgumentException(
+				$"Destination {destination} does not exist.",
+				nameof(destination)
+			);
+
+		movingPiece.Location = Option<Coordinates>.Some(destination);
+		return this;
+	}
+
+	internal Board Remove(IPiece destinationPiece)
+	{
+		_ = destinationPiece.Location.Match(
+			location => _cellByCoordinates[location]
+				= new(location, Option<IPiece>.None),
+			() => throw new ArgumentException(
+				"Can't remove piece without location.",
+				nameof(destinationPiece)
+			)
+		);
+		return this;
+	}
 }

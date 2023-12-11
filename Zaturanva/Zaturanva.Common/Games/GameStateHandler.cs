@@ -1,9 +1,13 @@
 ﻿using Ardalis.GuardClauses;
 
+using LanguageExt;
+
 using Zaturanva.Common.Armies;
 using Zaturanva.Common.ChessBoard;
 using Zaturanva.Common.Colors;
 using Zaturanva.Common.Pieces;
+
+using static LanguageExt.Prelude;
 
 namespace Zaturanva.Common.Games;
 
@@ -77,18 +81,79 @@ public static class GameStateHandler
 		return currentAlliance == pieceAlliance;
 	}
 
+	// ReSharper disable once MemberCanBePrivate.Global
 	public static bool CanMoveTo(
 		GameState game,
-		IPiece piece,
+		IPiece movingPiece,
 		Coordinates coordinates
 	)
-		=> CanMove(game, piece)
-		   && piece.CanMoveTo(game, coordinates);
+		=> CanMove(game, movingPiece)
+		   && movingPiece.CanMoveTo(game, coordinates);
 
-	public static GameState MoveTo(
+	public static Try<GameState> MoveTo(
 		GameState game,
-		IPiece piece,
-		Coordinates coordinates
+		IPiece movingPiece,
+		Coordinates destination
 	)
-		=> throw new NotImplementedException();
+		=> Try(
+			() => !CanMoveTo(game, movingPiece, destination)
+				? throw new ArgumentException(
+					$"Cannot move {movingPiece} to {destination}.",
+					nameof(movingPiece)
+				)
+				: game.Board[destination]
+					.Match(
+						cell => cell.Piece,
+						() => throw new ArgumentException(
+							$"No cell found at {destination}.",
+							nameof(destination)
+						)
+					)
+					.Match(
+						destinationPiece
+							=> MoveWithCapture(
+								game,
+								movingPiece,
+								destinationPiece
+							),
+						() => MoveWithoutCapture(game, movingPiece, destination)
+					)
+		);
+
+	private static GameState MoveWithCapture(
+		GameState game,
+		IPiece movingPiece,
+		IPiece destinationPiece
+	)
+	{
+		// TODO: Check success
+		_ = destinationPiece.Location.Match(
+			destination =>
+			{
+				destinationPiece.CapturedBy
+					= Option<Color>.Some(movingPiece.Color);
+				destinationPiece.Location = Option<Coordinates>.None;
+				_ = game.Board.Remove(destinationPiece);
+				_ = game.Board.Move(movingPiece, destination);
+			},
+			() =>
+				throw new ArgumentException(
+					"Destination Piece is missing location",
+					nameof(destinationPiece)
+				)
+		);
+
+		return game;
+	}
+
+	private static GameState MoveWithoutCapture(
+		GameState game,
+		IPiece movingPiece,
+		Coordinates destination
+	)
+	{
+		// TODO: Check success
+		_ = game.Board.Move(movingPiece, destination);
+		return game;
+	}
 }
