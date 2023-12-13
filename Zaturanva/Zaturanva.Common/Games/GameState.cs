@@ -13,15 +13,15 @@ public class GameState
 	public required Players Players { get; init; }
 	public GameOptions GameOptions { get; init; } = new();
 
-	public Color? FocusColor { get; set; }
+	public Color? FocusColor { get; init; }
 
-	public Color? ActiveColor { get; set; }
+	public Color? ActiveColor { get; init; }
 
-	public TurnPhase TurnPhase { get; set; }
+	public TurnPhase TurnPhase { get; init; }
 
 	public required Board Board { get; init; }
 
-	private readonly Dictionary<Color, Army> _armyByColor = new();
+	private Dictionary<Color, Army> _armyByColor = new();
 
 	public GameState SetBlackArmy(Army army)
 	{
@@ -87,4 +87,43 @@ public class GameState
 		=> _allianceByTeam.Values.First(
 			alliance => alliance.Contains(_armyByColor[color])
 		);
+
+	public GameState FocusOn(Color newFocusColor)
+		=> new()
+		{
+			Players = Players,
+			GameOptions = GameOptions,
+			FocusColor = newFocusColor,
+			ActiveColor = ActiveColor,
+			TurnPhase = TurnPhase,
+			Board = Board,
+			_armyByColor = _armyByColor,
+			__allianceByTeam = __allianceByTeam,
+		};
+
+	public GameState Activate(Color newActiveColor)
+		=> new()
+		{
+			Players = Players,
+			GameOptions = GameOptions,
+			FocusColor = FocusColor,
+			ActiveColor = newActiveColor,
+			TurnPhase = TurnPhase,
+			Board = Board,
+			_armyByColor = _armyByColor,
+			__allianceByTeam = __allianceByTeam,
+		};
+
+	public GameState Start(TurnPhase turnPhase)
+		=> new()
+		{
+			Players = Players,
+			GameOptions = GameOptions,
+			FocusColor = FocusColor,
+			ActiveColor = ActiveColor,
+			TurnPhase = turnPhase,
+			Board = Board,
+			_armyByColor = _armyByColor,
+			__allianceByTeam = __allianceByTeam,
+		};
 }

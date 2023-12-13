@@ -179,7 +179,7 @@ public static class GameRuleCheckerTests
 			},
 			targetColor
 		);
-		game.ActiveColor = activeColor;
+		game = game.Activate(activeColor);
 		IPiece piece = game.Board["a1"]
 			.ValueUnsafe()
 			.Piece.ValueUnsafe();

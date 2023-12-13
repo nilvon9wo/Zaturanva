@@ -20,9 +20,9 @@ public class GameHandlerTests
 	{
 		GameState game = SetupGameForNormalMovement();
 		const Color focusColor = Color.Black;
-		game.FocusColor = focusColor;
-		game.ActiveColor = focusColor;
-		game.TurnPhase = turnPhase;
+		game = game.FocusOn(focusColor)
+			.Activate(focusColor)
+			.Start(turnPhase);
 
 		IPiece piece = game[focusColor]
 			.Pieces.First(p => p is Pawn);
@@ -41,9 +41,9 @@ public class GameHandlerTests
 	{
 		GameState game = SetupGameForNormalMovement();
 		const Color focusColor = Color.Black;
-		game.FocusColor = focusColor;
-		game.ActiveColor = focusColor;
-		game.TurnPhase = turnPhase;
+		game = game.FocusOn(focusColor)
+			.Activate(focusColor)
+			.Start(turnPhase);
 
 		IPiece piece = game[Color.White]
 			.Pieces.First(p => p is Pawn);
@@ -62,9 +62,9 @@ public class GameHandlerTests
 	{
 		GameState game = SetupGameForNormalMovement();
 		const Color focusColor = Color.Black;
-		game.FocusColor = focusColor;
-		game.ActiveColor = focusColor;
-		game.TurnPhase = turnPhase;
+		game = game.FocusOn(focusColor)
+			.Activate(focusColor)
+			.Start(turnPhase);
 
 		const Color allyColor = Color.White;
 		IPiece piece = game[allyColor]
@@ -86,9 +86,9 @@ public class GameHandlerTests
 	{
 		GameState game = SetupGameForNormalMovement();
 		const Color focusColor = Color.Black;
-		game.FocusColor = focusColor;
-		game.ActiveColor = focusColor;
-		game.TurnPhase = turnPhase;
+		game = game.FocusOn(focusColor)
+			.Activate(focusColor)
+			.Start(turnPhase);
 
 		const Color allyColor = Color.White;
 		IPiece piece = game[allyColor]
@@ -109,9 +109,9 @@ public class GameHandlerTests
 	{
 		GameState game = SetupGameForNormalMovement();
 		const Color focusColor = Color.Black;
-		game.FocusColor = focusColor;
-		game.ActiveColor = focusColor;
-		game.TurnPhase = turnPhase;
+		game = game.FocusOn(focusColor)
+			.Activate(focusColor)
+			.Start(turnPhase);
 
 		const Color allyColor = Color.White;
 		Boat boat = (Boat)game[allyColor]
@@ -132,9 +132,9 @@ public class GameHandlerTests
 	{
 		GameState game = SetupGameForNormalMovement();
 		const Color focusColor = Color.Black;
-		game.FocusColor = focusColor;
-		game.ActiveColor = focusColor;
-		game.TurnPhase = turnPhase;
+		game = game.FocusOn(focusColor)
+			.Activate(focusColor)
+			.Start(turnPhase);
 
 		const Color otherColor = Color.Blue;
 		Boat boat = (Boat)game[otherColor]
@@ -155,9 +155,9 @@ public class GameHandlerTests
 	{
 		GameState game = SetupGameForNormalMovement();
 		const Color focusColor = Color.Black;
-		game.FocusColor = focusColor;
-		game.ActiveColor = focusColor;
-		game.TurnPhase = turnPhase;
+		game = game.FocusOn(focusColor)
+			.Activate(focusColor)
+			.Start(turnPhase);
 
 		const Color allyColor = Color.White;
 		Boat boat = (Boat)game[allyColor]
@@ -178,9 +178,9 @@ public class GameHandlerTests
 	{
 		GameState game = SetupGameForNormalMovement();
 		const Color focusColor = Color.Black;
-		game.FocusColor = focusColor;
-		game.ActiveColor = focusColor;
-		game.TurnPhase = turnPhase;
+		game = game.FocusOn(focusColor)
+			.Activate(focusColor)
+			.Start(turnPhase);
 
 		const Color enemyColor = Color.Blue;
 		game[Color.Black].Raja.Location
@@ -203,9 +203,9 @@ public class GameHandlerTests
 	{
 		GameState game = SetupGameForNormalMovement();
 		const Color focusColor = Color.Black;
-		game.FocusColor = focusColor;
-		game.ActiveColor = focusColor;
-		game.TurnPhase = turnPhase;
+		game = game.FocusOn(focusColor)
+			.Activate(focusColor)
+			.Start(turnPhase);
 
 		const Color enemyColor = Color.Blue;
 		IPiece piece = game[enemyColor]
@@ -223,10 +223,9 @@ public class GameHandlerTests
 		GameState game = SetupGameForNormalMovement();
 		const Color occupierColor = Color.Black;
 		const Color focusColor = Color.Orange;
-		game.FocusColor = focusColor;
-		game.ActiveColor = occupierColor;
-		game.TurnPhase = TurnPhase.SecondMove;
-
+		game = game.FocusOn(focusColor)
+			.Activate(occupierColor)
+			.Start(TurnPhase.SecondMove);
 		game[Color.Black].Raja.Location
 			= game.Board.GetThroneLocation(focusColor);
 
@@ -245,9 +244,9 @@ public class GameHandlerTests
 		GameState game = SetupGameForNormalMovement();
 		const Color occupierColor = Color.Black;
 		const Color focusColor = Color.Orange;
-		game.FocusColor = focusColor;
-		game.ActiveColor = occupierColor;
-		game.TurnPhase = TurnPhase.SecondMove;
+		game = game.FocusOn(focusColor)
+			.Activate(occupierColor)
+			.Start(TurnPhase.SecondMove);
 
 		game[Color.Black].Raja.Location
 			= game.Board.GetThroneLocation(focusColor);
@@ -272,9 +271,9 @@ public class GameHandlerTests
 		GameState game = SetupGameForNormalMovement();
 		const Color occupierColor = Color.Black;
 		const Color focusColor = Color.Orange;
-		game.FocusColor = focusColor;
-		game.ActiveColor = occupierColor;
-		game.TurnPhase = TurnPhase.SecondMove;
+		game = game.FocusOn(focusColor)
+			.Activate(occupierColor)
+			.Start(TurnPhase.SecondMove);
 
 		game[Color.Black].Raja.Location
 			= game.Board.GetThroneLocation(focusColor);

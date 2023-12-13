@@ -14,7 +14,7 @@ namespace Zaturanva.Common.Armies;
 public class Army
 {
 	public required Color Color { get; init; }
-	public required IPlayer Owner { get; set; }
+	public required IPlayer Owner { get; init; }
 	public required Generic.HashSet<IPiece> Pieces { get; init; }
 
 	public Raja Raja
