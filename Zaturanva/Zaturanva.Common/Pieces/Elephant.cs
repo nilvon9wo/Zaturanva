@@ -7,11 +7,11 @@ using Zaturanva.Common.Games;
 
 namespace Zaturanva.Common.Pieces;
 
-public class Elephant : IPiece
+public class Elephant(Color color, IPlayer owner) : IPiece
 {
-	public Color Color { get; set; }
+	public Color Color { get; init; } = color;
 
-	public required IPlayer Owner { get; set; }
+	public IPlayer Owner { get; init; } = owner;
 
 	public Option<Color> CapturedBy { get; set; } = Option<Color>.None;
 

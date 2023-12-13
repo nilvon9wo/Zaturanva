@@ -396,11 +396,13 @@ public static class GameRuleCheckerTests
 			allPieces = allPieces.Concat(
 				new List<IPiece>
 				{
-					new Pawn()
+					new Pawn(
+						(Color)targetColor,
+						players[(Color)targetColor]
+					)
 					{
-						Owner = players[(Color)targetColor],
-						Color = (Color)targetColor,
-						Location = Option<Coordinates>.Some(_targetLocation),
+						Location
+							= Option<Coordinates>.Some(_targetLocation),
 					},
 				}
 			);

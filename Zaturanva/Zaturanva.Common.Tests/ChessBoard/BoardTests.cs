@@ -69,17 +69,13 @@ public class BoardTests
 	private static List<IPiece> CreateTwoRajas()
 		=> new()
 		{
-			new Raja()
+			new Raja(Color.White, new Player().Assign(Color.White))
 			{
-				Owner = new Player().Assign(Color.White),
 				Location = Option<Coordinates>.Some("a1"),
-				Color = Color.White,
 			},
-			new Raja()
+			new Raja(Color.Black, new Player().Assign(Color.Black))
 			{
-				Owner = new Player().Assign(Color.Black),
 				Location = Option<Coordinates>.Some("h8"),
-				Color = Color.Black,
 			},
 		};
 

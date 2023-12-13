@@ -88,11 +88,9 @@ public class BoatTests
 	}
 
 	private static Boat CreateBoatAt(IPlayer player, string initialPosition)
-		=> new()
+		=> new(Color.White, player)
 		{
-			Owner = player,
 			Location = Option<Coordinates>.Some(initialPosition),
-			Color = Color.White,
 		};
 
 	private static GameState CreateGameFor(IPiece boat)

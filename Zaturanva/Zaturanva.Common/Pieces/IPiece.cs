@@ -9,11 +9,11 @@ namespace Zaturanva.Common.Pieces;
 
 public interface IPiece
 {
-	public Color Color { get; set; }
+	public Color Color { get; init; }
 	public Option<Coordinates> Location { get; set; }
 	public bool CanMoveTo(GameState game, Coordinates destination);
 
-	public IPlayer Owner { get; set; }
+	public IPlayer Owner { get; init; }
 
 	public Option<Color> CapturedBy { get; set; }
 }

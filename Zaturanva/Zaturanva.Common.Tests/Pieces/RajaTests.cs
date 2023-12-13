@@ -88,11 +88,9 @@ public class RajaTests
 	}
 
 	private static Raja CreateRajaAt(IPlayer player, string initialPosition)
-		=> new()
+		=> new(Color.White, player)
 		{
-			Owner = player,
 			Location = Option<Coordinates>.Some(initialPosition),
-			Color = Color.White,
 		};
 
 	private static GameState CreateGameFor(IPiece raja)

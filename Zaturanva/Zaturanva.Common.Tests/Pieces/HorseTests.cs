@@ -88,11 +88,9 @@ public class HorseTests
 	}
 
 	private static Horse CreateHorseAt(IPlayer player, string initialPosition)
-		=> new()
+		=> new(Color.White, player)
 		{
-			Owner = player,
 			Location = Option<Coordinates>.Some(initialPosition),
-			Color = Color.White,
 		};
 
 	private static GameState CreateGameFor(IPiece horse)
