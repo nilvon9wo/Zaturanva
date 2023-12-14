@@ -1,6 +1,4 @@
-﻿using LanguageExt;
-
-using Zaturanva.Common.ChessBoard;
+﻿using Zaturanva.Common.ChessBoard;
 using Zaturanva.Common.Colors;
 using Zaturanva.Common.Contestants.PlayerManagement;
 using Zaturanva.Common.Games;

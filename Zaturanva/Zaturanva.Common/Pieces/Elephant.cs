@@ -5,8 +5,6 @@ using Zaturanva.Common.Colors;
 using Zaturanva.Common.Contestants.PlayerManagement;
 using Zaturanva.Common.Games;
 
-using static LanguageExt.Prelude;
-
 namespace Zaturanva.Common.Pieces;
 
 public class Elephant(Color color, IPlayer owner) : IPiece

@@ -150,7 +150,7 @@ public record Board
 	)
 		=> Remove(movingPiece)
 			.Bind(
-				_ => movingPiece.MoveTo(game, destination)
+				_ => movingPiece.MoveTo(game, destination, true)
 					.IsSucc()
 					? MoveTo(movingPiece, destination)
 					: throw new InvalidOperationException(
