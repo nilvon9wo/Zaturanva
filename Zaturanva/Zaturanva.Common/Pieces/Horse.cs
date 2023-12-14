@@ -9,9 +9,11 @@ namespace Zaturanva.Common.Pieces;
 
 public class Horse(Color color, IPlayer owner) : IPiece
 {
+#pragma warning disable CS9124 // Parameter is captured into the state of the enclosing type and its value is also used to initialize a field, property, or event.
 	public Color Color { get; init; } = color;
 
 	public IPlayer Owner { get; init; } = owner;
+#pragma warning restore CS9124 // Parameter is captured into the state of the enclosing type and its value is also used to initialize a field, property, or event.
 
 	public Option<Color> CapturedBy { get; set; } = Option<Color>.None;
 
