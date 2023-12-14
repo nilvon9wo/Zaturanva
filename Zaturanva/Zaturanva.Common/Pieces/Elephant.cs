@@ -1,5 +1,4 @@
 ﻿using LanguageExt;
-using LanguageExt.UnsafeValueAccess;
 
 using Zaturanva.Common.ChessBoard;
 using Zaturanva.Common.Colors;
@@ -105,35 +104,17 @@ public class Elephant(Color color, IPlayer owner) : IPiece
 		Coordinates destination,
 		bool canMove = false
 	)
-		=> Try(
-			() =>
-			{
-				if (canMove || CanMoveTo(game, destination))
-				{
-					Location = destination;
-					return game;
-				}
-
-				throw new InvalidOperationException(
-					$"{this} cannot move to {destination}."
-				);
-			}
-		);
+		=> this.StandardMoveTo(game, destination, canMove);
 
 	public Try<GameState> MakeImprisoned(GameState game, Color captor)
-		=> Try(
-			() =>
-			{
-				if (CapturedBy.IsSome)
-				{
-					throw new InvalidOperationException(
-						$"{this} is already captured by {CapturedBy.ValueUnsafe()}"
-					);
-				}
+	{
+		Try<GameState> imprisonAttempt
+			= this.StandardMakeImprisoned(game, color);
+		if (imprisonAttempt.IsSucc())
+		{
+			Location = Option<Coordinates>.None;
+		}
 
-				CapturedBy = captor;
-				Location = Option<Coordinates>.None;
-				return game;
-			}
-		);
+		return imprisonAttempt;
+	}
 }
