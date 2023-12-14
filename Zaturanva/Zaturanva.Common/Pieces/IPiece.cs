@@ -7,10 +7,8 @@ using Zaturanva.Common.Games;
 
 namespace Zaturanva.Common.Pieces;
 
-public interface IPiece
+public interface IPiece : IColored
 {
-	public Color Color { get; init; }
-
 	public Option<Coordinates> Location { get; }
 
 	public IPlayer Owner { get; init; }

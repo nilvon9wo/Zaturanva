@@ -4,8 +4,6 @@ using Zaturanva.Common.Colors;
 using Zaturanva.Common.Contestants.PlayerManagement;
 using Zaturanva.Common.Pieces;
 
-using Generic = System.Collections.Generic;
-
 namespace Zaturanva.Common.Tests.ChessBoard;
 
 public class BoardTests
@@ -79,7 +77,7 @@ public class BoardTests
 		IPiece[] pieces = CreatePieces()
 			.ToArray();
 		Board board = CreateTestBoard(pieces);
-		Generic.HashSet<IPiece> piecesOnBoard = board
+		HashSet<IPiece> piecesOnBoard = board
 			.GetAllPieces()
 			.ToHashSet();
 

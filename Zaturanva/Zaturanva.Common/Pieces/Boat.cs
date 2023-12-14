@@ -1,9 +1,13 @@
-﻿using LanguageExt;
+﻿using Ardalis.GuardClauses;
+
+using LanguageExt;
 
 using Zaturanva.Common.ChessBoard;
 using Zaturanva.Common.Colors;
 using Zaturanva.Common.Contestants.PlayerManagement;
 using Zaturanva.Common.Games;
+
+using static LanguageExt.Prelude;
 
 namespace Zaturanva.Common.Pieces;
 
@@ -53,7 +57,22 @@ public class Boat(Color color, IPlayer owner) : IPiece
 		Coordinates destination,
 		bool canMove = false
 	)
-		=> this.StandardMoveTo(game, destination, canMove);
+		=> Try(
+			() =>
+			{
+				_ = Guard.Against.Null(game);
+				game = this.CheckAndRewardBoatTriumph(game, destination);
+				return canMove || CanMoveTo(game, destination)
+					? this.StandardMoveTo(game, destination, true)
+						.Match(
+							newGameState => newGameState,
+							exception => throw exception
+						)
+					: throw new InvalidOperationException(
+						$"{this} cannot move to {destination}."
+					);
+			}
+		);
 
 	public Try<GameState> MakeImprisoned(GameState game, Color captor)
 	{

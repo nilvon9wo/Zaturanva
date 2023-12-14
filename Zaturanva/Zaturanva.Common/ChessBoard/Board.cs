@@ -203,4 +203,8 @@ public record Board
 				return this;
 			}
 		);
+
+	internal IEnumerable<IPiece> GetAll(Func<IPiece, bool> isCondition)
+		=> GetAllPieces()
+			.Where(piece => isCondition(piece));
 }
