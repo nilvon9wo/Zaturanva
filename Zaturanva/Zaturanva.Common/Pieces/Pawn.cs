@@ -1,9 +1,12 @@
 ﻿using LanguageExt;
+using LanguageExt.UnsafeValueAccess;
 
 using Zaturanva.Common.ChessBoard;
 using Zaturanva.Common.Colors;
 using Zaturanva.Common.Contestants.PlayerManagement;
 using Zaturanva.Common.Games;
+
+using static LanguageExt.Prelude;
 
 namespace Zaturanva.Common.Pieces;
 
@@ -15,7 +18,14 @@ public class Pawn(Color color, IPlayer owner) : IPiece
 
 	public Option<Color> CapturedBy { get; set; } = Option<Color>.None;
 
-	public required Option<Coordinates> Location { get; set; }
+	public Option<Coordinates> Location { get; private set; }
+		= Option<Coordinates>.None;
+
+	public IPiece PlaceAt(Coordinates destination)
+	{
+		Location = destination;
+		return this;
+	}
 
 	public bool CanMoveTo(GameState game, Coordinates destination)
 		=> Location.Match(
@@ -83,4 +93,41 @@ public class Pawn(Color color, IPlayer owner) : IPiece
 			_ => throw new ArgumentException("Invalid color"),
 		};
 	}
+
+	public Try<GameState> MoveTo(
+		GameState game,
+		Coordinates destination,
+		bool canMove = false
+	)
+		=> Try(
+			() =>
+			{
+				if (canMove || CanMoveTo(game, destination))
+				{
+					Location = destination;
+					return game;
+				}
+
+				throw new InvalidOperationException(
+					$"{this} cannot move to {destination}."
+				);
+			}
+		);
+
+	public Try<GameState> MakeImprisoned(GameState game, Color captor)
+		=> Try(
+			() =>
+			{
+				if (CapturedBy.IsSome)
+				{
+					throw new InvalidOperationException(
+						$"{this} is already captured by {CapturedBy.ValueUnsafe()}"
+					);
+				}
+
+				CapturedBy = captor;
+				Location = Option<Coordinates>.None;
+				return game;
+			}
+		);
 }

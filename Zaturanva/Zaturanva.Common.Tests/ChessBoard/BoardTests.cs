@@ -70,13 +70,9 @@ public class BoardTests
 		=> new()
 		{
 			new Raja(Color.White, new Player().Assign(Color.White))
-			{
-				Location = Option<Coordinates>.Some("a1"),
-			},
+				.PlaceAt("a1"),
 			new Raja(Color.Black, new Player().Assign(Color.Black))
-			{
-				Location = Option<Coordinates>.Some("h8"),
-			},
+				.PlaceAt("h8"),
 		};
 
 	[Fact]

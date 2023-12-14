@@ -200,10 +200,8 @@ public class ElephantTests
 		string initialPosition,
 		Color color = Color.White
 	)
-		=> new(color, player)
-		{
-			Location = Option<Coordinates>.Some(initialPosition),
-		};
+		=> (Elephant)new Elephant(color, player)
+			.PlaceAt(initialPosition);
 
 	private static GameState CreateGameFor(
 		Players players,

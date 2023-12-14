@@ -1,6 +1,4 @@
-﻿using LanguageExt;
-
-using Zaturanva.Common.ChessBoard;
+﻿using Zaturanva.Common.ChessBoard;
 using Zaturanva.Common.Colors;
 using Zaturanva.Common.Contestants.PlayerManagement;
 using Zaturanva.Common.Games;
@@ -88,10 +86,8 @@ public class BoatTests
 	}
 
 	private static Boat CreateBoatAt(IPlayer player, string initialPosition)
-		=> new(Color.White, player)
-		{
-			Location = Option<Coordinates>.Some(initialPosition),
-		};
+		=> (Boat)new Boat(Color.White, player)
+			.PlaceAt(initialPosition);
 
 	private static GameState CreateGameFor(IPiece boat)
 	{

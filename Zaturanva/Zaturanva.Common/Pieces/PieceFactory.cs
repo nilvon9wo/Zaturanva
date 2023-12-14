@@ -28,16 +28,13 @@ internal static class PieceFactory
 					  ?? throw new InvalidPieceException(
 						  $"Can't create {pieceType}."
 					  );
-				switch (pieceInstance)
+				return pieceInstance switch
 				{
-					case IPiece piece:
-						piece.Location = Option<Coordinates>.Some(coordinates);
-						return piece;
-					default:
-						throw new InvalidPieceException(
-							$"{pieceType} cannot be cast to IPiece."
-						);
-				}
+					IPiece piece => piece.PlaceAt(coordinates),
+					_ => throw new InvalidPieceException(
+						$"{pieceType} cannot be cast to IPiece."
+					),
+				};
 			}
 		);
 }

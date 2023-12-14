@@ -125,16 +125,16 @@ public static class GameStateHandler
 		IPiece destinationPiece
 	)
 		=> destinationPiece.Location.Match(
-			destination =>
-			{
-				destinationPiece.CapturedBy
-					= Option<Color>.Some(movingPiece.Color);
-				destinationPiece.Location = Option<Coordinates>.None;
-
-				return game.Board.Remove(destinationPiece)
-					.Bind(_ => game.Board.Move(movingPiece, destination))
-					.Map(_ => game);
-			},
+			destination => destinationPiece
+				.MakeImprisoned(game, movingPiece.Color)
+				.Match(
+					_ => game.Board.Remove(destinationPiece)
+						.Bind(
+							_ => game.Board.Move(game, movingPiece, destination)
+						)
+						.Map(_ => game),
+					exception => throw exception
+				),
 			() => Try<GameState>(
 				new ArgumentException(
 					"Destination Piece is missing location",
@@ -148,6 +148,6 @@ public static class GameStateHandler
 		IPiece movingPiece,
 		Coordinates destination
 	)
-		=> game.Board.Move(movingPiece, destination)
+		=> game.Board.Move(game, movingPiece, destination)
 			.Map(_ => game);
 }

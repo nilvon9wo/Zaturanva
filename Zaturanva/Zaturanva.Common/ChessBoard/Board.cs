@@ -6,6 +6,7 @@ using LanguageExt.UnsafeValueAccess;
 using System.Diagnostics.CodeAnalysis;
 
 using Zaturanva.Common.Colors;
+using Zaturanva.Common.Games;
 using Zaturanva.Common.Pieces;
 
 using static LanguageExt.Prelude;
@@ -142,15 +143,19 @@ public record Board
 		=> GetAllPieces()
 			.Where(piece => piece.Color == color);
 
-	internal Try<Board> Move(IPiece movingPiece, Coordinates destination)
+	internal Try<Board> Move(
+		GameState game,
+		IPiece movingPiece,
+		Coordinates destination
+	)
 		=> Remove(movingPiece)
 			.Bind(
-				_ =>
-				{
-					movingPiece.Location
-						= Option<Coordinates>.Some(destination);
-					return MoveTo(movingPiece, destination);
-				}
+				_ => movingPiece.MoveTo(game, destination)
+					.IsSucc()
+					? MoveTo(movingPiece, destination)
+					: throw new InvalidOperationException(
+						$"{this} cannot move to {destination}."
+					)
 			)
 			.Map(_ => this);
 

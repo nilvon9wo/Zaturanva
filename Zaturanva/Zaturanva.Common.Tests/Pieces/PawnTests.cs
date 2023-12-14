@@ -366,10 +366,8 @@ public class PawnTests
 		string initialPosition,
 		Color color = Color.White
 	)
-		=> new(color, player)
-		{
-			Location = Option<Coordinates>.Some(initialPosition),
-		};
+		=> (Pawn)new Pawn(color, player)
+			.PlaceAt(initialPosition);
 
 	private static GameState CreateGameFor(
 		Players players,

@@ -1,5 +1,4 @@
-﻿using LanguageExt;
-using LanguageExt.UnsafeValueAccess;
+﻿using LanguageExt.UnsafeValueAccess;
 
 using Zaturanva.Common.Armies;
 using Zaturanva.Common.ChessBoard;
@@ -399,11 +398,7 @@ public static class GameRuleCheckerTests
 					new Pawn(
 						(Color)targetColor,
 						players[(Color)targetColor]
-					)
-					{
-						Location
-							= Option<Coordinates>.Some(_targetLocation),
-					},
+					).PlaceAt(_targetLocation),
 				}
 			);
 		}

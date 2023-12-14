@@ -10,10 +10,22 @@ namespace Zaturanva.Common.Pieces;
 public interface IPiece
 {
 	public Color Color { get; init; }
-	public Option<Coordinates> Location { get; set; }
-	public bool CanMoveTo(GameState game, Coordinates destination);
+
+	public Option<Coordinates> Location { get; }
 
 	public IPlayer Owner { get; init; }
 
 	public Option<Color> CapturedBy { get; set; }
+
+	public IPiece PlaceAt(Coordinates destination);
+
+	public bool CanMoveTo(GameState game, Coordinates destination);
+
+	public Try<GameState> MoveTo(
+		GameState game,
+		Coordinates destination,
+		bool canMove = false
+	);
+
+	public Try<GameState> MakeImprisoned(GameState game, Color captor);
 }

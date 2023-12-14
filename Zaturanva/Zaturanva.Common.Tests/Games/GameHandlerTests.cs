@@ -183,8 +183,8 @@ public class GameHandlerTests
 			.Start(turnPhase);
 
 		const Color enemyColor = Color.Blue;
-		game[Color.Black].Raja.Location
-			= game.Board.GetThroneLocation(enemyColor);
+		_ = game[Color.Black]
+			.Raja.PlaceAt(game.Board.GetThroneLocation(enemyColor));
 
 		IPiece piece = game[enemyColor]
 			.Pieces.First(p => p is Pawn);
@@ -226,8 +226,8 @@ public class GameHandlerTests
 		game = game.FocusOn(focusColor)
 			.Activate(occupierColor)
 			.Start(TurnPhase.SecondMove);
-		game[Color.Black].Raja.Location
-			= game.Board.GetThroneLocation(focusColor);
+		_ = game[Color.Black]
+			.Raja.PlaceAt(game.Board.GetThroneLocation(focusColor));
 
 		IPiece piece = game[focusColor]
 			.Pieces.First(p => p is Pawn);
@@ -248,8 +248,8 @@ public class GameHandlerTests
 			.Activate(occupierColor)
 			.Start(TurnPhase.SecondMove);
 
-		game[Color.Black].Raja.Location
-			= game.Board.GetThroneLocation(focusColor);
+		_ = game[Color.Black]
+			.Raja.PlaceAt(game.Board.GetThroneLocation(focusColor));
 
 		IPiece piece = game[focusColor]
 			.Pieces.First(p => p is Pawn);
@@ -275,8 +275,8 @@ public class GameHandlerTests
 			.Activate(occupierColor)
 			.Start(TurnPhase.SecondMove);
 
-		game[Color.Black].Raja.Location
-			= game.Board.GetThroneLocation(focusColor);
+		_ = game[Color.Black]
+			.Raja.PlaceAt(game.Board.GetThroneLocation(focusColor));
 
 		IPiece piece = game[pieceColor]
 			.Pieces.First(p => p is Pawn);
