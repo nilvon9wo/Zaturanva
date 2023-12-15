@@ -1,4 +1,6 @@
-﻿using LanguageExt.UnsafeValueAccess;
+﻿using Ardalis.GuardClauses;
+
+using LanguageExt.UnsafeValueAccess;
 
 using Zaturanva.Common.ChessBoard;
 using Zaturanva.Common.ChessBoard.Geometry;
@@ -7,34 +9,19 @@ using Zaturanva.Common.Games;
 
 namespace Zaturanva.Common.Pieces;
 
-internal static class BoatTriumphHelper
+public static class BoatTriumphHelper
 {
-	internal static GameState CheckAndRewardBoatTriumph(
+	public static GameState CheckAndRewardBoatTriumph(
 		this Boat boat,
 		GameState game,
 		Coordinates destination
 	)
 	{
-		Boat[] allBoats = (Boat[])game.Board
-			.GetAll(piece => piece is Boat && piece.Location.IsSome)
+		_ = Guard.Against.Null(boat);
+		Boat[] allBoats = (Boat[])Guard.Against.Null(game)
+			.Board
+			.GetAllPieces(piece => piece is Boat)
 			.ToArray();
-		return allBoats.Length == 4
-			? CheckAndRewardBoatTriumph(
-				boat,
-				game,
-				destination,
-				allBoats
-			)
-			: game;
-	}
-
-	private static GameState CheckAndRewardBoatTriumph(
-		Boat boat,
-		GameState game,
-		Coordinates destination,
-		Boat[] allBoats
-	)
-	{
 		Dictionary<Color, Coordinates> coordinatesByColor
 			= allBoats.ToDictionary(
 				x => x.Color,
@@ -84,11 +71,22 @@ internal static class BoatTriumphHelper
 		Boat[] boatsArray = boats.ToArray();
 		foreach (Boat boat in boatsArray.SelectEnemies(thisBoat))
 		{
-			_ = game.Board.Remove(boat)
-				.Bind(_ => boat.MakeImprisoned(game, thisBoat.Color))
-				.IfFail(exception => throw exception);
+			_ = ImprisonEnemyBoat(thisBoat, game, boat);
 		}
 
 		return boatsArray;
+	}
+
+	private static Boat ImprisonEnemyBoat(
+		Boat thisBoat,
+		GameState game,
+		Boat boat
+	)
+	{
+		_ = game.Board.Remove(boat)
+			.Bind(_ => boat.MakeImprisoned(game, thisBoat.Color))
+			.IfFail(exception => throw exception);
+
+		return boat;
 	}
 }

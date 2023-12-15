@@ -204,7 +204,7 @@ public record Board
 			}
 		);
 
-	internal IEnumerable<IPiece> GetAll(Func<IPiece, bool> isCondition)
+	public IEnumerable<IPiece> GetAllPieces(Func<IPiece, bool> isCondition)
 		=> GetAllPieces()
-			.Where(piece => isCondition(piece));
+			.Where(isCondition);
 }
