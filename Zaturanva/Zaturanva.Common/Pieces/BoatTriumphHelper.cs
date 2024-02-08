@@ -18,9 +18,10 @@ public static class BoatTriumphHelper
 	)
 	{
 		_ = Guard.Against.Null(boat);
-		Boat[] allBoats = (Boat[])Guard.Against.Null(game)
+		Boat[] allBoats = Guard.Against.Null(game)
 			.Board
 			.GetAllPieces(piece => piece is Boat)
+			.Select(piece => (Boat)piece)
 			.ToArray();
 		Dictionary<Color, Coordinates> coordinatesByColor
 			= allBoats.ToDictionary(
@@ -78,6 +79,7 @@ public static class BoatTriumphHelper
 	}
 
 	private static Boat ImprisonEnemyBoat(
+		// ReSharper disable once SuggestBaseTypeForParameter
 		Boat thisBoat,
 		GameState game,
 		Boat boat
